@@ -1,5 +1,4 @@
 using BikeRental.Data;
-using BikeRental.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +24,6 @@ namespace BikeRental
             {
                 options.UseInMemoryDatabase("BikeRentalDbContext");
             });
-
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddControllers();
         }
