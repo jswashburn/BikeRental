@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BikeRental.Data;
 using BikeRental.Models;
+using BikeRental.Models.Repositories;
 
 namespace BikeRental.Controllers
 {
@@ -14,97 +10,48 @@ namespace BikeRental.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly BikeRentalDbContext _context;
+        IRepository<Employee> _employeesRepo;
 
-        public EmployeesController(BikeRentalDbContext context)
+        public EmployeesController(IRepository<Employee> employees)
         {
-            _context = context;
+            _employeesRepo = employees;
         }
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public IEnumerable<Employee> GetEmployees()
         {
-            return await _context.Employees.ToListAsync();
+            return _employeesRepo.Get();
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public ActionResult<Employee> GetEmployee(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return employee;
+            return _employeesRepo.Get(id);
         }
 
         // PUT: api/Employees/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public ActionResult<Employee> PutEmployee(Employee employee)
         {
-            if (id != employee.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(employee).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _employeesRepo.Update(employee);
         }
 
         // POST: api/Employees
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public ActionResult<Employee> PostEmployee(Employee employee)
         {
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+            return _employeesRepo.Insert(employee);
         }
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Employee>> DeleteEmployee(int id)
+        public ActionResult<Employee> DeleteEmployee(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-
-            return employee;
+            return _employeesRepo.Delete(id);
         }
 
-        private bool EmployeeExists(int id)
-        {
-            return _context.Employees.Any(e => e.Id == id);
-        }
+        bool EmployeeExists(int id) => _employeesRepo.Get().Any(e => e.Id == id);
     }
 }
