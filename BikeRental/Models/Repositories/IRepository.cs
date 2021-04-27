@@ -2,7 +2,7 @@
 
 namespace BikeRental.Models.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : IEntity
     {
         IEnumerable<T> Get();
         T Get(int id);
