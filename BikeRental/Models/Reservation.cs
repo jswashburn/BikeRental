@@ -4,16 +4,16 @@ namespace BikeRental.Models
 {
     public class Reservation : BaseEntity
     {
+        public int ReservationId { get; set; }
         public int CustomerId { get; set; }
         public int BikeId { get; set; }
-        public int CurrentStoreId { get; set; }
-
+        public int? CurrentStoreId { get; set; }
+        public bool? Archive { get; set; }
         public DateTime DateReserved { get; set; }
-        public DateTime DateReturned { get; set; }
-        public bool Archive { get; set; }
+        public DateTime? DateReturned { get; set; }
 
-        public BikeStore BikeStore { get; set; }
-        public Bike Bike { get; set; }
-        public Customer Customer { get; set; }
+        public virtual Bike Bike { get; set; }
+        public virtual BikeStore CurrentStore { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
