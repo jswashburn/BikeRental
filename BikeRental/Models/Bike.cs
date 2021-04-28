@@ -4,17 +4,21 @@ namespace BikeRental.Models
 {
     public class Bike : BaseEntity
     {
-        public int OwningStoreId { get; set; }
-
+        public Bike()
+        {
+            Reservations = new HashSet<Reservation>();
+        }
         public int FrameSize { get; set; }
-        public decimal Surcharge { get; set; }
-        public decimal Price { get; set; }
-        public bool ElectricMotor { get; set; }
-        public bool AllTerrain { get; set; }
-        public bool Available { get; set; }
+        public bool? ElectricMotor { get; set; }
+        public bool? AllTerrainSuspension { get; set; }
         public string BikeStyle { get; set; }
+        public int BikeId { get; set; }
+        public int? OwningStoreId { get; set; }
+        public bool Available { get; set; }
+        public decimal? Surcharge { get; set; }
+        public decimal Price { get; set; }
 
-        public BikeStore OwningStore { get; set; }
-        public IEnumerable<Reservation> Reservations { get; set; }
+        public virtual BikeStore OwningStore { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }
