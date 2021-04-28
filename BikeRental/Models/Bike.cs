@@ -8,11 +8,11 @@ namespace BikeRental.Models
         {
             Reservations = new HashSet<Reservation>();
         }
+
         public int FrameSize { get; set; }
         public bool? ElectricMotor { get; set; }
         public bool? AllTerrainSuspension { get; set; }
         public string BikeStyle { get; set; }
-        public int BikeId { get; set; }
         public int? OwningStoreId { get; set; }
         public bool Available { get; set; }
         public decimal? Surcharge { get; set; }

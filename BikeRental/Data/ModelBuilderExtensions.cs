@@ -26,7 +26,7 @@ namespace BikeRental.Data
                     Surcharge = 99.99m,
                     Price = 200.00m,
                     ElectricMotor = false,
-                    AllTerrain = false,
+                    AllTerrainSuspension = null,
                     Available = true,
                     BikeStyle = "Mountain"
                 });
@@ -95,7 +95,7 @@ namespace BikeRental.Data
                     Id = 1,
                     PhoneNumber = "1-800-BIKE",
                     HourlyRate = 15.00m,
-                    Discount = 0.10m,
+                    Discount = 0.10d,
                     Latitude = 34.749432m,
                     Longitude = -77.421997m
                 });

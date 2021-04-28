@@ -16,13 +16,10 @@ namespace BikeRental.Data
             Database.EnsureCreated();
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.Seed();
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BikeRental;Trusted_Connection=True;");
             }
         }
@@ -33,9 +30,9 @@ namespace BikeRental.Data
 
             modelBuilder.Entity<Bike>(entity =>
             {
-                entity.Property(e => e.BikeId)
+                entity.Property(e => e.Id)
                     .ValueGeneratedNever()
-                    .HasColumnName("Bike_ID");
+                    .HasColumnName("Id");
 
                 entity.Property(e => e.AllTerrainSuspension).HasColumnName("All_Terrain_Suspension");
 
@@ -61,13 +58,13 @@ namespace BikeRental.Data
 
             modelBuilder.Entity<BikeStore>(entity =>
             {
-                entity.HasKey(e => e.StoreId);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("Bike_Stores");
 
-                entity.Property(e => e.StoreId)
+                entity.Property(e => e.Id)
                     .ValueGeneratedNever()
-                    .HasColumnName("Store_ID");
+                    .HasColumnName("Id");
 
                 entity.Property(e => e.HourlyRate)
                     .HasColumnType("money")
@@ -85,11 +82,11 @@ namespace BikeRental.Data
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CustomerId)
+                entity.Property(e => e.Id)
                     .ValueGeneratedNever()
-                    .HasColumnName("Customer_ID");
+                    .HasColumnName("Id");
 
-                entity.Property(e => e.Email)
+                entity.Property(e => e.EmailAddress)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -113,9 +110,9 @@ namespace BikeRental.Data
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.EmployeeId)
+                entity.Property(e => e.Id)
                     .ValueGeneratedNever()
-                    .HasColumnName("Employee_ID");
+                    .HasColumnName("Id");
 
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
@@ -138,7 +135,7 @@ namespace BikeRental.Data
 
                 entity.HasOne(d => d.SupervisorNavigation)
                     .WithMany(p => p.InverseSupervisorNavigation)
-                    .HasForeignKey(d => d.Supervisor)
+                    .HasForeignKey(d => d.SupervisorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Employees_Employees");
             });
@@ -147,9 +144,9 @@ namespace BikeRental.Data
             {
                 entity.ToTable("Reservation");
 
-                entity.Property(e => e.ReservationId)
+                entity.Property(e => e.Id)
                     .ValueGeneratedNever()
-                    .HasColumnName("Reservation_ID");
+                    .HasColumnName("Id");
 
                 entity.Property(e => e.BikeId).HasColumnName("Bike_ID");
 
@@ -180,6 +177,7 @@ namespace BikeRental.Data
             });
 
             OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Seed();
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

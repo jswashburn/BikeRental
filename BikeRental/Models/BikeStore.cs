@@ -11,7 +11,6 @@ namespace BikeRental.Models
             Reservations = new HashSet<Reservation>();
         }
 
-        public int StoreId { get; set; }
         public string PhoneNumber { get; set; }
         public decimal? HourlyRate { get; set; }
         public double? Discount { get; set; }

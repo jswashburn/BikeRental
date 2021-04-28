@@ -4,7 +4,6 @@ namespace BikeRental.Models
 {
     public class Reservation : BaseEntity
     {
-        public int ReservationId { get; set; }
         public int CustomerId { get; set; }
         public int BikeId { get; set; }
         public int? CurrentStoreId { get; set; }
