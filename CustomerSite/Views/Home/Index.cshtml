@@ -1,7 +1,33 @@
-﻿@{
+﻿@model IEnumerable<Bike>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome To the Bike Rental Agency!</h1>
+    <h2 class="text-center">Currently available bikes: </h2>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Bike Style</th>
+                <th scope="col">Electric Motor</th>
+                <th scope="col">All Terrain Suspension</th>
+                <th scope="col">Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Bike bike in Model)
+            {
+                <tr>
+                    <th scope="row">Buttons here</th>
+                    <td>@bike.BikeStyle</td>
+                    <td>@bike.ElectricMotor</td>
+                    <td>@bike.AllTerrainSuspension</td>
+                    <td>@bike.Available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
