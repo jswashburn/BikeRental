@@ -29,6 +29,54 @@ namespace BikeRentalApi.Data
                     AllTerrainSuspension = null,
                     Available = true,
                     BikeStyle = "Mountain"
+                },
+                new Bike
+                {
+                    Id = 2,
+                    OwningStoreId = 1,
+                    FrameSize = 230,
+                    Surcharge = 199.99m,
+                    Price = 60.00m,
+                    ElectricMotor = false,
+                    AllTerrainSuspension = null,
+                    Available = false,
+                    BikeStyle = "Road"
+                },
+                new Bike
+                {
+                    Id = 3,
+                    OwningStoreId = 1,
+                    FrameSize = 45,
+                    Surcharge = 10.50m,
+                    Price = 60.00m,
+                    ElectricMotor = false,
+                    AllTerrainSuspension = true,
+                    Available = true,
+                    BikeStyle = "Road"
+                },
+                new Bike
+                {
+                    Id = 4,
+                    OwningStoreId = 1,
+                    FrameSize = 200,
+                    Surcharge = 399.99m,
+                    Price = 600.00m,
+                    ElectricMotor = true,
+                    AllTerrainSuspension = true,
+                    Available = true,
+                    BikeStyle = "Dirt"
+                },
+                new Bike
+                {
+                    Id = 5,
+                    OwningStoreId = 1,
+                    FrameSize = 75,
+                    Surcharge = 199.99m,
+                    Price = 60.00m,
+                    ElectricMotor = false,
+                    AllTerrainSuspension = null,
+                    Available = false,
+                    BikeStyle = "Trike"
                 });
         }
 
