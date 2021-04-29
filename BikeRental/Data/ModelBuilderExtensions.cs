@@ -1,8 +1,8 @@
-﻿using BikeRental.Models;
+﻿using BikeRentalApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace BikeRental.Data
+namespace BikeRentalApi.Data
 {
     public static class ModelBuilderExtensions
     {

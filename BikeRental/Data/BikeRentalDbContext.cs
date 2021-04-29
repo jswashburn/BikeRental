@@ -1,7 +1,7 @@
-﻿using BikeRental.Models;
+﻿using BikeRentalApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BikeRental.Data
+namespace BikeRentalApi.Data
 {
     public partial class BikeRentalDbContext : DbContext
     {

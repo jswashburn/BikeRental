@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BikeRental.Models
+namespace BikeRentalApi.Models
 {
     public class Reservation : BaseEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BikeRental.Models.Repositories
+namespace BikeRentalApi.Models.Repositories
 {
     public interface IRepositoryAsync<T> where T : IEntity
     {

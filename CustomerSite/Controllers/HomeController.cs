@@ -1,26 +1,26 @@
-﻿using CustomerSite.Models;
+﻿using BikeRentalApi.Models;
+using BikeRentalApi.Models.Repositories;
+using CustomerSite.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomerSite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        readonly IRepositoryAsync<Bike> _bikesRepo;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IRepositoryAsync<Bike> bikes)
         {
-            _logger = logger;
+            _bikesRepo = bikes;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<Bike> bikes = await _bikesRepo.GetAsync("bikes");
+            return View(bikes);
         }
 
         public IActionResult Privacy()
