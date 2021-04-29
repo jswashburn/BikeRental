@@ -13,6 +13,8 @@ namespace BikeRentalApi.Models.Repositories
 
         public ApiRepository(IHttpClientFactory clientFactory)
         {
+            // Notice in the startup.cs there is an HttpClient configured. ClientName
+            // tells the factory which of those HttpClients to get. (There is only one right now)
             _client = clientFactory.CreateClient(ClientName);
         }
 
