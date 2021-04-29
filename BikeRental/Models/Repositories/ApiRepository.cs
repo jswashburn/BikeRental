@@ -16,31 +16,31 @@ namespace BikeRentalApi.Models.Repositories
             _client = clientFactory.CreateClient(ClientName);
         }
 
-        public async Task<IEnumerable<T>> GetAsync(string controller)
+        public async Task<IEnumerable<T>> GetAsync(string route)
         {
-            return await _client.GetFromJsonAsync<IEnumerable<T>>(controller);
+            return await _client.GetFromJsonAsync<IEnumerable<T>>(route);
         }
 
-        public async Task<T> GetAsync(int id, string controller)
+        public async Task<T> GetAsync(int id, string route)
         {
-            return await _client.GetFromJsonAsync<T>($"{controller}/{id}");
+            return await _client.GetFromJsonAsync<T>($"{route}/{id}");
         }
 
-        public async Task<T> DeleteAsync(int id, string controller)
+        public async Task<T> DeleteAsync(int id, string route)
         {
-            using HttpResponseMessage response = await _client.DeleteAsync($"{controller}/{id}");
+            using HttpResponseMessage response = await _client.DeleteAsync($"{route}/{id}");
             return await DeserializeFromResponse<T>(response);
         }
 
-        public async Task<T> InsertAsync(T item, string controller)
+        public async Task<T> InsertAsync(T item, string route)
         {
-            using HttpResponseMessage response = await _client.PostAsJsonAsync(controller, item);
+            using HttpResponseMessage response = await _client.PostAsJsonAsync(route, item);
             return await DeserializeFromResponse<T>(response);
         }
 
-        public async Task<T> UpdateAsync(T item, string controller)
+        public async Task<T> UpdateAsync(T item, string route)
         {
-            using HttpResponseMessage response = await _client.PutAsJsonAsync(controller, item);
+            using HttpResponseMessage response = await _client.PutAsJsonAsync(route, item);
             return await DeserializeFromResponse<T>(response);
         }
 
