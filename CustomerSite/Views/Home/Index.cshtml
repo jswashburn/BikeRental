@@ -12,10 +12,23 @@
     <table class="table table-bordered table-hover text-left">
         <thead class="thead-dark">
             <tr>
-                <th scope="col"></th>
-                <th scope="col">Style</th>
-                <th scope="col">Electric Motor</th>
-                <th scope="col">All Terrain Suspension</th>
+                <th scope="col">
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropown-toggle"
+                           href="#" role="button" data-toggle="dropdown">
+                            Filter
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item">Available</a>
+                            <a class="dropdown-item">On Sale</a>
+                            <a class="dropdown-item">All-terrain</a>
+                            <a class="dropdown-item">Electric Motor</a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col"><h4>Style</h4></th>
+                <th scope="col"><h4>Electric Motor</h4></th>
+                <th scope="col"><h4>All Terrain Suspension</h4></th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +48,9 @@
                     <strong>@bikeButtonText</strong>
                 </a>
             </th>
-            <td><h4>@bike.BikeStyle</h4></td>
-            <td><h4>@(hasElectricMotor ? "Yes" : "No")</h4></td>
-            <td><h4>@(hasAllTerrain ? "Yes" : "No")</h4></td>
+            <td>@bike.BikeStyle</td>
+            <td>@(hasElectricMotor ? "Yes" : "No")</td>
+            <td>@(hasAllTerrain ? "Yes" : "No")</td>
         </tr>
         }
         </tbody>
