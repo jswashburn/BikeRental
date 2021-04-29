@@ -13,7 +13,7 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Bike Style</th>
+                <th scope="col">Style</th>
                 <th scope="col">Electric Motor</th>
                 <th scope="col">All Terrain Suspension</th>
             </tr>
@@ -21,16 +21,18 @@
         <tbody>
         @foreach (Bike bike in Model)
         {
+            bool hasElectricMotor = bike?.ElectricMotor ?? false;
+            bool hasAllTerrain = bike?.AllTerrainSuspension ?? false;
         <tr class="@(bike.Available ? "table-default" : "table-warning")">
             <th scope="row">
                 <a class="btn rounded-pill
                    @(bike.Available ? "btn-success" : "btn-warning")">
-                Reserve @(bike.Available ? "now!" : "when available")
+                    <strong>Reserve @(bike.Available ? "now!" : "when available")</strong>
                 </a>
             </th>
             <td><h4>@bike.BikeStyle</h4></td>
-            <td><h4>@bike.ElectricMotor</h4></td>
-            <td><h4>@bike.AllTerrainSuspension</h4></td>
+            <td><h4>@(hasElectricMotor ? "Yes" : "No")</h4></td>
+            <td><h4>@(hasAllTerrain ? "Yes" : "No")</h4></td>
         </tr>
         }
         </tbody>
