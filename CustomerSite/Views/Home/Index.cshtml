@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Bike>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome";
 }
 
 <div class="text-center">
     <h1 class="display-4 pb-4">Welcome!</h1>
-    <h3 class="text-left">Browse: </h3>
+    <h3 class="text-left">Browse </h3>
 
     @if(Model.Any())
     {
@@ -23,11 +23,15 @@
         {
             bool hasElectricMotor = bike?.ElectricMotor ?? false;
             bool hasAllTerrain = bike?.AllTerrainSuspension ?? false;
-        <tr class="@(bike.Available ? "table-default" : "table-warning")">
+            string bikeRowClass = bike.Available ? "table-default" : "table-warning";
+            string bikeButtonClass = bike.Available ? "btn-success" : "btn-warning";
+            string bikeButtonText = bike.Available ? "Reserve Now!" : "Reserve When Available";
+
+        <tr class="@bikeRowClass">
             <th scope="row">
-                <a class="btn rounded-pill
-                   @(bike.Available ? "btn-success" : "btn-warning")">
-                    <strong>Reserve @(bike.Available ? "now!" : "when available")</strong>
+                <a class="btn @bikeButtonClass rounded-pill"
+                   asp-controller="Reservation" asp-route-id="@bike.Id">
+                    <strong>@bikeButtonText</strong>
                 </a>
             </th>
             <td><h4>@bike.BikeStyle</h4></td>
@@ -40,6 +44,6 @@
     }
     else
     {
-        <h3 class="text-center">No bikes available, go away please</h3>
+        <h3 class="text-center">No bikes available, <strong>go away</strong></h3>
     }
 </div>
