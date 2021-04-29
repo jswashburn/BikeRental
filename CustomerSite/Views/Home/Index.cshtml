@@ -4,9 +4,11 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome To the Bike Rental Agency!</h1>
-    <h2 class="text-center">Currently available bikes: </h2>
+    <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
+    <h3 class="text-left">Browse: </h3>
 
+    @if(Model.Any())
+    {
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
@@ -18,16 +20,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(Bike bike in Model)
-            {
-                <tr>
-                    <th scope="row">Buttons here</th>
-                    <td>@bike.BikeStyle</td>
-                    <td>@bike.ElectricMotor</td>
-                    <td>@bike.AllTerrainSuspension</td>
-                    <td>@bike.Available</td>
-                </tr>
-            }
+        @foreach (Bike bike in Model)
+        {
+        <tr>
+            <th scope="row"><a class="btn btn-outline-success text-success rounded-pill">Reserve</a></th>
+            <td><h4>@bike.BikeStyle</h4></td>
+            <td><h4>@bike.ElectricMotor</h4></td>
+            <td><h4>@bike.AllTerrainSuspension</h4></td>
+            <td><h4>@bike.Available</h4></td>
+        </tr>
+        }
         </tbody>
     </table>
+    }
+    else
+    {
+        <h3 class="text-center">No bikes available, go away please</h3>
+    }
 </div>
