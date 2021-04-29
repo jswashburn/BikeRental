@@ -9,7 +9,7 @@
 
     @if(Model.Any())
     {
-    <table class="table table-hover text-left">
+    <table class="table table-bordered table-hover text-left">
         <thead class="thead-dark">
             <tr>
                 <th scope="col"></th>
@@ -31,6 +31,7 @@
             <th scope="row">
                 <a class="btn @bikeButtonClass rounded-pill"
                    asp-controller="Reservation" asp-route-id="@bike.Id">
+                    <span class="badge">$@bike.Price</span>
                     <strong>@bikeButtonText</strong>
                 </a>
             </th>
