@@ -1,10 +1,10 @@
-﻿using BikeRental.Models;
-using BikeRental.Models.Repositories;
+﻿using BikeRentalApi.Models;
+using BikeRentalApi.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BikeRental.Controllers
+namespace BikeRentalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

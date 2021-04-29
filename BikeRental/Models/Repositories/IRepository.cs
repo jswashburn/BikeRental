@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BikeRental.Models.Repositories
+namespace BikeRentalApi.Models.Repositories
 {
     public interface IRepository<T> where T : IEntity
     {

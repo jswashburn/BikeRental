@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BikeRental.Models
+namespace BikeRentalApi.Models
 {
     public class Customer : Person
     {

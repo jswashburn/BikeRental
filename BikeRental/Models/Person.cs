@@ -1,4 +1,4 @@
-﻿namespace BikeRental.Models
+﻿namespace BikeRentalApi.Models
 {
     public class Person : BaseEntity
     {
