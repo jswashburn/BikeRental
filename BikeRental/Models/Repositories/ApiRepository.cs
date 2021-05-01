@@ -9,7 +9,7 @@ namespace BikeRentalApi.Models.Repositories
     {
         protected readonly HttpClient client;
 
-        public string ClientName { get; set; } = "Customer";
+        public string ClientName { get; set; } = "Client";
 
         public ApiRepository(IHttpClientFactory clientFactory)
         {
