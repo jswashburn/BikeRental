@@ -10,7 +10,6 @@ namespace BikeRentalApi.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        // TODO: Update to return notfounds
         IRepository<Reservation> _reservationsRepo;
 
         public ReservationsController(IRepository<Reservation> reservations)
@@ -20,9 +19,12 @@ namespace BikeRentalApi.Controllers
 
         // GET: api/Reservations
         [HttpGet]
-        public IEnumerable<Reservation> GetReservations()
+        public ActionResult<List<Reservation>> GetReservations()
         {
-            return _reservationsRepo.Get();
+            IEnumerable<Reservation> reservation = _reservationsRepo.Get();
+            if (reservation == null)
+                return NotFound();
+            return reservation.ToList();
         }
 
         // GET: api/Reservations/5
