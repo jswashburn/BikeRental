@@ -21,7 +21,7 @@ namespace EmployeeSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient("Employee", client =>
+            services.AddHttpClient("Client", client =>
             {
                 client.BaseAddress = new Uri("https://localhost:44323/api/");
                 client.DefaultRequestHeaders.Accept.Clear();
