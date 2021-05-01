@@ -4,7 +4,6 @@ using CustomerSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomerSite.Controllers
@@ -12,7 +11,6 @@ namespace CustomerSite.Controllers
     public class HomeController : Controller
     {
         readonly IRepositoryAsync<Bike> _bikesRepo;
-        const string _route = "bikes";
 
         public HomeController(IRepositoryAsync<Bike> bikes)
         {
@@ -21,7 +19,7 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Bike> bikes = await _bikesRepo.GetAsync(_route);
+            IEnumerable<Bike> bikes = await _bikesRepo.GetAsync(BikeRentalRoute.Bikes);
             return View(bikes);
         }
 

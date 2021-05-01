@@ -1,9 +1,10 @@
-﻿@model ReservationViewModel
+﻿@model Bike
+@addTagHelper *, CustomerSite
 @{ 
-    string reserveButtonClass = Model.Bike.Available ? "btn-success" : "btn-warning";
-    string reserveButtonText = Model.Bike.Available ? "Reserve Now!" : "Check Availability";
-    bool hasAllTerrain = Model.Bike.AllTerrainSuspension ?? false;
-    bool hasElectric = Model.Bike.ElectricMotor ?? false;
+    string reserveButtonClass = Model.Available ? "btn-success" : "btn-warning";
+    string reserveButtonText = Model.Available ? "Reserve Now!" : "Check Availability";
+    bool hasAllTerrain = Model.AllTerrainSuspension ?? false;
+    bool hasElectric = Model.ElectricMotor ?? false;
 }
 
 <div class="row align-items-center">
@@ -46,17 +47,17 @@
                 </tr>
                 <tr>
                     <th scope="row">Frame size</th>
-                    <td>@Model.Bike.FrameSize</td>
+                    <td>@Model.FrameSize</td>
                 </tr>
                 <tr>
                     <th scope="row">Style</th>
-                    <td>@Model.Bike.BikeStyle</td>
+                    <td>@Model.BikeStyle</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="2">
-                        <button type="button" data-toggle="modal" data-target="#guestContact"
+                        <button type="button" data-toggle="modal" data-target="#reservationModal"
                                 class="btn @reserveButtonClass rounded-pill">
                             <strong>@reserveButtonText</strong>
                         </button>
@@ -67,20 +68,22 @@
     </div>
 </div>
 
-<div class="modal fade" id="guestContact" tabindex="-1">
+<div class="modal fade" id="reservationModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="guestContactTitle">
+                <h5 class="modal-title">
                     Please fill out the information below
                 </h5>
             </div>
             <div class="modal-body">
-                <partial name="_ContactInfoPartial" model="@Model.Customer" />
+                <form asp-action="CreateReservation" method="post" id="reservationForm">
+                    <vc:reservation-form bike-id="@Model.Id"/>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" form="guestContactForm" class="btn btn-primary">Request reservation</button>
+                <button type="submit" form="reservationForm" class="btn btn-primary">Request reservation</button>
             </div>
         </div>
     </div>

@@ -1,32 +1,86 @@
 ﻿using BikeRentalApi.Models;
 using BikeRentalApi.Models.Repositories;
+using CustomerSite.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CustomerSite.Controllers
 {
     public class ReservationController : Controller
     {
-        readonly IRepositoryAsync<Reservation> _reservationsRepo;
+        // TODO: Create a service to handle the logic of creating reservations
+        // TODO: New project for API Repository?
+        // TODO: New project for Reservation Service/All services?
 
-        const string _routeReservations = "reservations";
+        readonly IReservationApiRepository _reservationsRepo;
+        readonly IRepositoryAsync<Bike> _bikesRepo;
+        readonly ICustomerApiRepository _customersRepo;
 
-        public ReservationController(IRepositoryAsync<Reservation> reservations)
+        public ReservationController(IReservationApiRepository reservations,
+            IRepositoryAsync<Bike> bikes, ICustomerApiRepository customers)
         {
             _reservationsRepo = reservations;
+            _bikesRepo = bikes;
+            _customersRepo = customers;
         }
 
-        public IActionResult Index(Customer customer)
+        public async Task<IActionResult> Index(int id)
         {
-            return View(customer);
+            var requestedBike = await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
+            TempData["BikeId"] = id;
+            return View(requestedBike);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation(Reservation reservation)
+        public async Task<IActionResult> CreateReservation(Customer customer)
         {
-            Reservation confirmed = await _reservationsRepo
-                .InsertAsync(reservation, _routeReservations);
-            return View("ConfirmReservation", confirmed);
+            Bike bike = await GetBikeFromId((int)TempData["BikeId"]);
+            if (bike == null)
+                return BadRequest();
+
+            if (await ReservationExists(bike))
+                return View("ReservationAlreadyExists", bike);
+
+            Customer existing = await PostCustomerIfEmailNotFound(customer);
+            Reservation reservation = await PostNewReservation(bike, existing);
+
+            return View("ReservationConfirmed", reservation);
+        }
+
+        private async Task<Customer> PostCustomerIfEmailNotFound(Customer customer)
+        {
+            return await _customersRepo
+                .GetByEmailAsync(customer.EmailAddress) ?? await PostNewCustomer(customer);
+        }
+
+        async Task<Bike> GetBikeFromId(int id)
+        {
+            return await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
+        }
+
+        async Task<Reservation> PostNewReservation(Bike bike, Customer customer)
+        {
+            Reservation reservation = new Reservation
+            {
+                Bike = bike,
+                Customer = customer,
+                DateReserved = DateTime.Now
+            };
+
+            reservation = await _reservationsRepo
+                .InsertAsync(reservation, BikeRentalRoute.Reservations);
+            return reservation;
+        }
+
+        async Task<Customer> PostNewCustomer(Customer customer)
+        {
+            return await _customersRepo.InsertAsync(customer, BikeRentalRoute.Customers);
+        }
+
+        async Task<bool> ReservationExists(Bike bike)
+        {
+            return await _reservationsRepo.GetByBikeId(bike.Id) != null;
         }
     }
 }

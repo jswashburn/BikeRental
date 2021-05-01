@@ -27,7 +27,7 @@ namespace BikeRentalApi.Data
                     Price = 200.00m,
                     ElectricMotor = false,
                     AllTerrainSuspension = null,
-                    Available = true,
+                    Available = false,
                     BikeStyle = "Mountain"
                 },
                 new Bike
