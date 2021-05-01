@@ -6,23 +6,34 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using BikeRentalApi;
 
 namespace EmployeeSite.Controllers
 {
     public class HomeController : Controller
     {
-        readonly IRepositoryAsync<Bike> _bikesRepo;
-        const string _route = "bikes";
+        readonly IReservationApiRepository _resRepo;
+        readonly ICustomerApiRepository _custRepo;
+        readonly IBikeApiRepository _bikeRepo;
 
-        public HomeController(IRepositoryAsync<Bike> bikes)
+        public HomeController(IReservationApiRepository res, ICustomerApiRepository cust, IBikeApiRepository bike)
         {
-            _bikesRepo = bikes;
+            _resRepo = res;
+            _custRepo = cust;
+            _bikeRepo = bike;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Bike> bikes = await _bikesRepo.GetAsync(_route);
-            return View(bikes);
+            IEnumerable<Reservation> res = await _resRepo.GetAsync(BikeRentalRoute.Reservations);
+            IEnumerable<Bike> bike = await _bikeRepo.GetAsync(BikeRentalRoute.Bikes);
+            IEnumerable<Customer> cust = await _custRepo.GetAsync(BikeRentalRoute.Customers);
+            foreach(Reservation r in res)
+            {
+                r.Customer = cust.FirstOrDefault(p=>r.CustomerId == p.Id);
+                r.Bike = bike.FirstOrDefault(p => p.Id == r.BikeId);
+            }
+            return View(res);
         }
 
         public IActionResult Privacy()

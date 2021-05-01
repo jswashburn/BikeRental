@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bike>
+﻿@model IEnumerable<Reservation>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,21 +13,25 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Bike Style</th>
-                    <th scope="col">Electric Motor</th>
-                    <th scope="col">All Terrain Suspension</th>
-                    <th scope="col">Available</th>
+                    <th scope="col"></th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Bike Id, Style</th>
+                    <th scope="col">Current Store, Owning Store</th>
+                    <th scope="col">Date Reserved</th>
+                    <th scope="col">Date Returned</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Bike bike in Model)
+                @foreach (Reservation res in Model)
                 {
                     <tr>
-                        <th scope="row"><a class="btn btn-outline-success text-success rounded-pill">Reserve</a></th>
-                        <td><h4>@bike.BikeStyle</h4></td>
-                        <td><h4>@bike.ElectricMotor</h4></td>
-                        <td><h4>@bike.AllTerrainSuspension</h4></td>
-                        <td><h4>@bike.Available</h4></td>
+                        <th scope="row"><a class="btn btn-outline-success text-white bg-success rounded-pill">Edit</a></th>
+                        <th scope="row"><a class="btn btn-outline-success text-white bg-danger rounded-pill">Delete</a></th>
+                        <td><h4>@res.Customer.LastName</h4></td>
+                        <td><h4>@res.BikeId, @res.Bike.BikeStyle</h4></td>
+                        <td><h4>@res.CurrentStoreId, @res.Bike.OwningStoreId</h4></td>
+                        <td><h4>@res.DateReserved</h4></td>
+                        <td><h4>@res.DateReturned</h4></td>
                     </tr>
                 }
             </tbody>

@@ -30,6 +30,9 @@ namespace EmployeeSite
             });
             services.AddControllersWithViews();
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(ApiRepository<>));
+            services.AddScoped<ICustomerApiRepository, CustomerApiRepository>();
+            services.AddScoped<IReservationApiRepository, ReservationApiRepository>();
+            services.AddScoped<IBikeApiRepository, BikeApiRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

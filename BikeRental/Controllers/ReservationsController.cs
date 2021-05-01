@@ -35,16 +35,6 @@ namespace BikeRentalApi.Controllers
             return reservation;
         }
 
-        // GET api/Reservations/bike/1
-        [HttpGet("bike/{id}")]
-        public ActionResult<Reservation> GetReservationByBike(int id)
-        {
-            Reservation reservation = _reservationsRepo.Get().FirstOrDefault(r => r.BikeId == id);
-            if (reservation == null)
-                return NotFound();
-            return reservation;
-        }
-
         // PUT: api/Reservations/5
         [HttpPut("{id}")]
         public ActionResult<Reservation> PutReservation(Reservation reservation)

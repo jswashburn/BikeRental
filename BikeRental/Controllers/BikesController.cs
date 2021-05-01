@@ -11,10 +11,12 @@ namespace BikeRentalApi.Controllers
     public class BikesController : ControllerBase
     {
         IRepository<Bike> _bikesRepo;
+        IRepository<Reservation> _reservationsRepo;
 
-        public BikesController(IRepository<Bike> bikes)
+        public BikesController(IRepository<Bike> bikes, IRepository<Reservation> reservations)
         {
             _bikesRepo = bikes;
+            _reservationsRepo = reservations;
         }
 
         // GET: api/Bikes
@@ -29,6 +31,16 @@ namespace BikeRentalApi.Controllers
         public Bike GetBike(int id)
         {
             return _bikesRepo.Get(id);
+        }
+
+        // GET api/Bikes/reservation/1
+        [HttpGet("reservation/{id}")]
+        public ActionResult<Reservation> GetReservationByBike(int id)
+        {
+            Reservation reservation = _reservationsRepo.Get().FirstOrDefault(r => r.BikeId == id);
+            if (reservation == null)
+                return NotFound();
+            return reservation;
         }
 
         // PUT: api/Bikes/5

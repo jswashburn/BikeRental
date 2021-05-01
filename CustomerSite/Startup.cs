@@ -1,6 +1,5 @@
 using BikeRentalApi.Models;
 using BikeRentalApi.Models.Repositories;
-using CustomerSite.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +35,7 @@ namespace CustomerSite
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(ApiRepository<>));
             services.AddScoped<ICustomerApiRepository, CustomerApiRepository>();
             services.AddScoped<IReservationApiRepository, ReservationApiRepository>();
+            services.AddScoped<IBikeApiRepository, BikeApiRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
