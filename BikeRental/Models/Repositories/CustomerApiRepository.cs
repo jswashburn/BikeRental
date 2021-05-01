@@ -1,10 +1,7 @@
-﻿using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
-using System.Net.Http;
-using System.Net.Http.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace CustomerSite.Models.Repositories
+namespace BikeRentalApi.Models.Repositories
 {
     public interface ICustomerApiRepository : IRepositoryAsync<Customer>
     {

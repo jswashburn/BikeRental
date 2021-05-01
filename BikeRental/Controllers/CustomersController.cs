@@ -37,6 +37,16 @@ namespace BikeRentalApi.Controllers
             return customer;
         }
 
+        // GET api/Reservations/customer/1
+        [HttpGet("customer/{id}")]
+        public ActionResult<Customer> GetReservationByCustomer(int id)
+        {
+            Customer customer = _customersRepo.Get().FirstOrDefault(c => c.Id == id);
+            if (customer == null)
+                return NotFound();
+            return customer;
+        }
+
         // GET: api/Customers/email/jsw@erau.edu
         [HttpGet("email/{email}")]
         public ActionResult<Customer> GetCustomerByEmail(string email)

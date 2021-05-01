@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using BikeRentalApi;
 
 namespace CustomerSite.Controllers
 {
     public class HomeController : Controller
     {
-        readonly IRepositoryAsync<Bike> _bikesRepo;
+        readonly IBikeApiRepository _bikesRepo;
 
-        public HomeController(IRepositoryAsync<Bike> bikes)
+        public HomeController(IBikeApiRepository bikes)
         {
             _bikesRepo = bikes;
         }

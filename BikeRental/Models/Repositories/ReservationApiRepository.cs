@@ -1,10 +1,7 @@
-﻿using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
-using System.Net.Http;
-using System.Net.Http.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace CustomerSite.Models.Repositories
+namespace BikeRentalApi.Models.Repositories
 {
     public interface IReservationApiRepository : IRepositoryAsync<Reservation>
     {
@@ -22,5 +19,13 @@ namespace CustomerSite.Models.Repositories
                 .GetAsync($"{BikeRentalRoute.ReservationsByBikeId}/{id}");
             return await DeserializeFromResponse<Reservation>(response);
         }
+
+        public async Task<Customer> GetCustomerAsync(int id)
+        {
+            using HttpResponseMessage response = await client
+                .GetAsync($"{BikeRentalRoute.CustomerFromReservation}/{id}");
+            return await DeserializeFromResponse<Customer>(response);
+        }
+
     }
 }

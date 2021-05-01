@@ -1,4 +1,4 @@
-﻿namespace CustomerSite
+﻿namespace BikeRentalApi
 {
     public class BikeRentalRoute
     {
@@ -10,6 +10,7 @@
         public const string Employees = "employees";
 
         public const string CustomersByEmail = Customers + "/email";
-        public const string ReservationsByBikeId = Reservations + "/bike";
+        public const string ReservationsByBikeId = Bikes + "/reservation";
+        public const string CustomerFromReservation = Reservations + "/customer";
     }
 }

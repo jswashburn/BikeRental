@@ -45,7 +45,7 @@ namespace BikeRentalApi.Data
                 new Bike
                 {
                     Id = 3,
-                    OwningStoreId = 1,
+                    OwningStoreId = 2,
                     FrameSize = 45,
                     Surcharge = 10.50m,
                     Price = 60.00m,
@@ -146,7 +146,17 @@ namespace BikeRentalApi.Data
                     Discount = 0.10d,
                     Latitude = 34.749432m,
                     Longitude = -77.421997m
+                },
+                new BikeStore
+                {
+                    Id = 2,
+                    PhoneNumber =  "1-800-BIKE",
+                    HourlyRate = 15.00m,
+                    Discount = 0.10d,
+                    Latitude = 37.749432m,
+                    Longitude = -71.421997m
                 });
         }
+
     }
 }
