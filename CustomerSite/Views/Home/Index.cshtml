@@ -1,33 +1,56 @@
 ﻿@model IEnumerable<Bike>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome";
 }
 
 <div class="text-center">
-    <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
-    <h3 class="text-left">Browse: </h3>
+    <h1 class="display-4 pb-4">Welcome!</h1>
+    <h3 class="text-left">Browse </h3>
 
     @if(Model.Any())
     {
-    <table class="table table-hover">
+    <table class="table table-bordered table-hover text-left">
         <thead class="thead-dark">
             <tr>
-                <th scope="col"></th>
-                <th scope="col">Bike Style</th>
-                <th scope="col">Electric Motor</th>
-                <th scope="col">All Terrain Suspension</th>
-                <th scope="col">Available</th>
+                <th scope="col">
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropown-toggle"
+                           href="#" role="button" data-toggle="dropdown">
+                            Filter
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item">Available</a>
+                            <a class="dropdown-item">On Sale</a>
+                            <a class="dropdown-item">All-terrain</a>
+                            <a class="dropdown-item">Electric Motor</a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col"><h4>Style</h4></th>
+                <th scope="col"><h4>Electric Motor</h4></th>
+                <th scope="col"><h4>All Terrain Suspension</h4></th>
             </tr>
         </thead>
         <tbody>
         @foreach (Bike bike in Model)
         {
-        <tr>
-            <th scope="row"><a class="btn btn-outline-success text-success rounded-pill">Reserve</a></th>
-            <td><h4>@bike.BikeStyle</h4></td>
-            <td><h4>@bike.ElectricMotor</h4></td>
-            <td><h4>@bike.AllTerrainSuspension</h4></td>
-            <td><h4>@bike.Available</h4></td>
+            bool hasElectricMotor = bike?.ElectricMotor ?? false;
+            bool hasAllTerrain = bike?.AllTerrainSuspension ?? false;
+            string bikeRowClass = bike.Available ? "table-default" : "table-warning";
+            string bikeButtonClass = bike.Available ? "btn-success" : "btn-warning";
+            string bikeButtonText = bike.Available ? "Reserve Now!" : "Reserve When Available";
+
+        <tr class="@bikeRowClass">
+            <th scope="row">
+                <a class="btn @bikeButtonClass rounded-pill"
+                   asp-controller="Reservation" asp-route-id="@bike.Id">
+                    <span class="badge">$@bike.Price</span>
+                    <strong>@bikeButtonText</strong>
+                </a>
+            </th>
+            <td>@bike.BikeStyle</td>
+            <td>@(hasElectricMotor ? "Yes" : "No")</td>
+            <td>@(hasAllTerrain ? "Yes" : "No")</td>
         </tr>
         }
         </tbody>
@@ -35,6 +58,6 @@
     }
     else
     {
-        <h3 class="text-center">No bikes available, go away please</h3>
+        <h3 class="text-center">No bikes available, <strong>go away</strong></h3>
     }
 </div>

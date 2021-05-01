@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BikeRentalApi", "BikeRental\BikeRentalApi.csproj", "{F4FE5DD1-3AC4-443E-A1E7-553318400B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerSite", "CustomerSite\CustomerSite.csproj", "{0422398E-A3B1-423F-AC0E-F25F230C5DA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerSite", "CustomerSite\CustomerSite.csproj", "{0422398E-A3B1-423F-AC0E-F25F230C5DA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeSite", "EmployeeSite\EmployeeSite.csproj", "{46D21F3B-939F-48CC-92F2-F3CBA136389D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0422398E-A3B1-423F-AC0E-F25F230C5DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0422398E-A3B1-423F-AC0E-F25F230C5DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0422398E-A3B1-423F-AC0E-F25F230C5DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D21F3B-939F-48CC-92F2-F3CBA136389D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D21F3B-939F-48CC-92F2-F3CBA136389D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D21F3B-939F-48CC-92F2-F3CBA136389D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D21F3B-939F-48CC-92F2-F3CBA136389D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

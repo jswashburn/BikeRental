@@ -1,6 +1,4 @@
-using BikeRentalApi.Models;
 using BikeRentalApi.Models.Repositories;
-using CustomerSite.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Net.Http.Headers;
 
-namespace CustomerSite
+namespace EmployeeSite
 {
     public class Startup
     {
@@ -23,19 +21,15 @@ namespace CustomerSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpClient("Customer", client =>
+            services.AddHttpClient("Employee", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44375/api/");
+                client.BaseAddress = new Uri("https://localhost:44323/api/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept
                     .Add(new MediaTypeWithQualityHeaderValue("application/json"));
             });
-
             services.AddControllersWithViews();
-
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(ApiRepository<>));
-            services.AddScoped<ICustomerApiRepository, CustomerApiRepository>();
-            services.AddScoped<IReservationApiRepository, ReservationApiRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
