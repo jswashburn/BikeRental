@@ -19,16 +19,22 @@ namespace BikeRentalApi.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public IEnumerable<Employee> GetEmployees()
+        public ActionResult<List<Employee>> GetEmployees()
         {
-            return _employeesRepo.Get();
+            IEnumerable<Employee> employees = _employeesRepo.Get();
+            if (employees == null)
+                return NotFound();
+            return employees.ToList();
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
         public ActionResult<Employee> GetEmployee(int id)
         {
-            return _employeesRepo.Get(id);
+            Employee employee = _employeesRepo.Get(id);
+            if (employee == null)
+                return NotFound();
+            return employee;
         }
 
         // PUT: api/Employees/5
