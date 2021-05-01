@@ -19,23 +19,32 @@ namespace BikeRentalApi.Controllers
 
         // GET: api/Customers
         [HttpGet]
-        public IEnumerable<Customer> GetCustomers()
+        public ActionResult<List<Customer>> GetCustomers()
         {
-            return _customersRepo.Get();
+            IEnumerable<Customer> customers = _customersRepo.Get();
+            if (customers == null)
+                return NotFound();
+            return customers.ToList();
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
         public ActionResult<Customer> GetCustomer(int id)
         {
-            return _customersRepo.Get(id);
+            Customer customer = _customersRepo.Get(id);
+            if (customer == null)
+                return NotFound();
+            return customer;
         }
 
         // GET: api/Customers/email/jsw@erau.edu
         [HttpGet("email/{email}")]
         public ActionResult<Customer> GetCustomerByEmail(string email)
         {
-            return _customersRepo.Get().FirstOrDefault(c => c.EmailAddress == email);
+            Customer customer = _customersRepo.Get().FirstOrDefault(c => c.EmailAddress == email);
+            if (customer == null)
+                return NotFound();
+            return customer;
         }
 
         // PUT: api/Customers/5

@@ -63,13 +63,17 @@ namespace CustomerSite.Controllers
         {
             Reservation reservation = new Reservation
             {
-                Bike = bike,
-                Customer = customer,
+                BikeId = bike.Id,
+                CustomerId = customer.Id,
                 DateReserved = DateTime.Now
             };
 
             reservation = await _reservationsRepo
                 .InsertAsync(reservation, BikeRentalRoute.Reservations);
+
+            reservation.Customer = customer;
+            reservation.Bike = bike;
+
             return reservation;
         }
 

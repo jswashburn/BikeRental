@@ -19,16 +19,22 @@ namespace BikeRentalApi.Controllers
 
         // GET: api/BikeStores
         [HttpGet]
-        public IEnumerable<BikeStore> GetBikeStores()
+        public ActionResult<List<BikeStore>> GetBikeStores()
         {
-            return _storesRepo.Get();
+            IEnumerable<BikeStore> bikeStores = _storesRepo.Get();
+            if (bikeStores == null)
+                return NotFound();
+            return bikeStores.ToList();
         }
 
         // GET: api/BikeStores/5
         [HttpGet("{id}")]
         public ActionResult<BikeStore> GetBikeStore(int id)
         {
-            return _storesRepo.Get(id);
+            BikeStore bikeStore = _storesRepo.Get(id);
+            if (bikeStore == null)
+                return NotFound();
+            return bikeStore;
         }
 
         // PUT: api/BikeStores/5
