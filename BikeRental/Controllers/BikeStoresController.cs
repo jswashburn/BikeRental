@@ -37,8 +37,8 @@ namespace BikeRentalApi.Controllers
             return Ok(bikeStore);
         }
 
-        // PUT: api/BikeStores/5
-        [HttpPut("{id}")]
+        // PUT: api/BikeStores
+        [HttpPut]
         public ActionResult<BikeStore> PutBikeStore(BikeStore bikeStore)
         {
             BikeStore updated = _storesRepo.Update(bikeStore);

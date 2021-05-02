@@ -47,8 +47,8 @@ namespace BikeRentalApi.Controllers
             return Ok(customer);
         }
 
-        // PUT: api/Customers/5
-        [HttpPut("{id}")]
+        // PUT: api/Customers/
+        [HttpPut]
         public ActionResult<Customer> PutCustomer(Customer customer)
         {
             Customer updated = _customersRepo.Update(customer);

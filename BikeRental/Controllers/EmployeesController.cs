@@ -37,8 +37,8 @@ namespace BikeRentalApi.Controllers
             return Ok(employee);
         }
 
-        // PUT: api/Employees/5
-        [HttpPut("{id}")]
+        // PUT: api/Employees
+        [HttpPut]
         public ActionResult<Employee> PutEmployee(Employee employee)
         {
             Employee updated = _employeesRepo.Update(employee);
