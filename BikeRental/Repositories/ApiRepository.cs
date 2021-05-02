@@ -1,50 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using BikeRentalApi.Models;
+using BikeRentalApi.Models.Repositories;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace BikeRentalApi.Models.Repositories
+namespace BikeRentalApi.Repositories
 {
     public class ApiRepository<T> : IRepositoryAsync<T> where T : BaseEntity
     {
-        protected readonly HttpClient client;
-
-        public string ClientName { get; set; } = "Client";
+        public HttpClient Client { get; }
 
         public ApiRepository(IHttpClientFactory clientFactory)
         {
-            // Notice in the startup.cs there is an HttpClient configured. ClientName
-            // tells the factory which of those HttpClients to get. (There is only one right now)
-            client = clientFactory.CreateClient(ClientName);
+            Client = clientFactory.CreateClient("Client");
         }
 
         public async Task<IEnumerable<T>> GetAsync(string route)
         {
-            using HttpResponseMessage response = await client.GetAsync(route);
+            using HttpResponseMessage response = await Client.GetAsync(route);
             return await DeserializeFromResponse<IEnumerable<T>>(response);
         }
 
         public async Task<T> GetAsync(int id, string route)
         {
-            using HttpResponseMessage response = await client.GetAsync($"{route}/{id}");
+            using HttpResponseMessage response = await Client.GetAsync($"{route}/{id}");
             return await DeserializeFromResponse<T>(response);
         }
 
         public async Task<T> DeleteAsync(int id, string route)
         {
-            using HttpResponseMessage response = await client.DeleteAsync($"{route}/{id}");
+            using HttpResponseMessage response = await Client.DeleteAsync($"{route}/{id}");
             return await DeserializeFromResponse<T>(response);
         }
 
         public async Task<T> InsertAsync(T item, string route)
         {
-            using HttpResponseMessage response = await client.PostAsJsonAsync(route, item);
+            using HttpResponseMessage response = await Client.PostAsJsonAsync(route, item);
             return await DeserializeFromResponse<T>(response);
         }
 
         public async Task<T> UpdateAsync(T item, string route)
         {
-            using HttpResponseMessage response = await client.PutAsJsonAsync(route, item);
+            using HttpResponseMessage response = await Client.PutAsJsonAsync(route, item);
             return await DeserializeFromResponse<T>(response);
         }
 
