@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BikeRentalApi.Repositories.Extensions;
+using BikeRentalApi;
 
 namespace EmployeeSite.Controllers
 {
