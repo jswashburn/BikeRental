@@ -24,7 +24,7 @@ namespace BikeRentalApi.Controllers
             IEnumerable<Customer> customers = _customersRepo.Get();
             if (customers == null)
                 return NotFound();
-            return customers.ToList();
+            return Ok(customers.ToList());
         }
 
         // GET: api/Customers/5
@@ -34,17 +34,7 @@ namespace BikeRentalApi.Controllers
             Customer customer = _customersRepo.Get(id);
             if (customer == null)
                 return NotFound();
-            return customer;
-        }
-
-        // GET api/Reservations/customer/1
-        [HttpGet("customer/{id}")]
-        public ActionResult<Customer> GetReservationByCustomer(int id)
-        {
-            Customer customer = _customersRepo.Get().FirstOrDefault(c => c.Id == id);
-            if (customer == null)
-                return NotFound();
-            return customer;
+            return Ok(customer);
         }
 
         // GET: api/Customers/email/jsw@erau.edu
@@ -54,28 +44,34 @@ namespace BikeRentalApi.Controllers
             Customer customer = _customersRepo.Get().FirstOrDefault(c => c.EmailAddress == email);
             if (customer == null)
                 return NotFound();
-            return customer;
+            return Ok(customer);
         }
 
         // PUT: api/Customers/5
         [HttpPut("{id}")]
         public ActionResult<Customer> PutCustomer(Customer customer)
         {
-            return _customersRepo.Update(customer);
+            Customer updated = _customersRepo.Update(customer);
+            return Ok(updated);
         }
 
         // POST: api/Customers
         [HttpPost]
         public ActionResult<Customer> PostCustomer(Customer customer)
         {
-            return _customersRepo.Insert(customer);
+            if (CustomerExists(customer.Id))
+                return BadRequest($"Customer already exists! Id {customer.Id}");
+
+            Customer created = _customersRepo.Insert(customer);
+            return CreatedAtAction(nameof(PostCustomer), created);
         }
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public ActionResult<Customer> DeleteCustomer(int id)
         {
-            return _customersRepo.Delete(id);
+            Customer deleted = _customersRepo.Delete(id);
+            return Ok(deleted);
         }
 
         bool CustomerExists(int id) => _customersRepo.Get().Any(c => c.Id == id);
