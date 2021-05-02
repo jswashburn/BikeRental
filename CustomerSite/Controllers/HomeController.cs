@@ -1,11 +1,11 @@
-﻿using BikeRentalApi;
-using BikeRentalApi.Models;
+﻿using BikeRentalApi.Models;
 using BikeRentalApi.Models.Repositories;
 using CustomerSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using BikeRentalApi;
 
 namespace CustomerSite.Controllers
 {

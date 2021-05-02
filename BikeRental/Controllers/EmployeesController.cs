@@ -24,7 +24,7 @@ namespace BikeRentalApi.Controllers
             IEnumerable<Employee> employees = _employeesRepo.Get();
             if (employees == null)
                 return NotFound();
-            return employees.ToList();
+            return Ok(employees.ToList());
         }
 
         // GET: api/Employees/5
@@ -34,28 +34,34 @@ namespace BikeRentalApi.Controllers
             Employee employee = _employeesRepo.Get(id);
             if (employee == null)
                 return NotFound();
-            return employee;
+            return Ok(employee);
         }
 
-        // PUT: api/Employees/5
-        [HttpPut("{id}")]
+        // PUT: api/Employees
+        [HttpPut]
         public ActionResult<Employee> PutEmployee(Employee employee)
         {
-            return _employeesRepo.Update(employee);
+            Employee updated = _employeesRepo.Update(employee);
+            return Ok(updated);
         }
 
         // POST: api/Employees
         [HttpPost]
         public ActionResult<Employee> PostEmployee(Employee employee)
         {
-            return _employeesRepo.Insert(employee);
+            if (EmployeeExists(employee.Id))
+                return BadRequest($"Employee already exists! ID {employee.Id}");
+
+            Employee created = _employeesRepo.Insert(employee);
+            return CreatedAtAction(nameof(PostEmployee), created);
         }
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
         public ActionResult<Employee> DeleteEmployee(int id)
         {
-            return _employeesRepo.Delete(id);
+            Employee deleted = _employeesRepo.Delete(id);
+            return Ok(deleted);
         }
 
         bool EmployeeExists(int id) => _employeesRepo.Get().Any(e => e.Id == id);

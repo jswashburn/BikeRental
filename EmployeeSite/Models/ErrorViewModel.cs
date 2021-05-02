@@ -1,3 +1,5 @@
+using System;
+
 namespace EmployeeSite.Models
 {
     public class ErrorViewModel

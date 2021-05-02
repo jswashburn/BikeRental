@@ -26,7 +26,7 @@ namespace BikeRentalApi.Controllers
             IEnumerable<Bike> bikes = _bikesRepo.Get();
             if (bikes == null)
                 return NotFound();
-            return bikes.ToList();
+            return Ok(bikes.ToList());
         }
 
         // GET: api/Bikes/5
@@ -36,7 +36,7 @@ namespace BikeRentalApi.Controllers
             Bike bike = _bikesRepo.Get(id);
             if (bike == null)
                 return NotFound();
-            return bike;
+            return Ok(bike);
         }
 
         // GET api/Bikes/reservation/1
@@ -46,28 +46,34 @@ namespace BikeRentalApi.Controllers
             Reservation reservation = _reservationsRepo.Get().FirstOrDefault(r => r.BikeId == id);
             if (reservation == null)
                 return NotFound();
-            return reservation;
+            return Ok(reservation);
         }
 
-        // PUT: api/Bikes/5
-        [HttpPut("{id}")]
+        // PUT: api/Bikes/
+        [HttpPut]
         public ActionResult<Bike> PutBike(Bike bike)
         {
-            return _bikesRepo.Update(bike);
+            Bike updated = _bikesRepo.Update(bike);
+            return Ok(updated);
         }
 
         // POST: api/Bikes
         [HttpPost]
         public ActionResult<Bike> PostBike(Bike bike)
         {
-            return _bikesRepo.Insert(bike);
+            if (BikeExists(bike.Id))
+                return BadRequest($"Bike already exists! (Bike ID {bike.Id})");
+
+            Bike created = _bikesRepo.Insert(bike);
+            return CreatedAtAction(nameof(PostBike), created);
         }
 
         // DELETE: api/Bikes/5
         [HttpDelete("{id}")]
         public ActionResult<Bike> DeleteBike(int id)
         {
-            return _bikesRepo.Delete(id);
+            Bike deleted = _bikesRepo.Delete(id);
+            return Ok(deleted);
         }
 
         bool BikeExists(int id) => _bikesRepo.Get().Any(b => b.Id == id);

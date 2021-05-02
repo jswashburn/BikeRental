@@ -1,5 +1,4 @@
-﻿using BikeRentalApi;
-using BikeRentalApi.Models;
+﻿using BikeRentalApi.Models;
 using BikeRentalApi.Models.Repositories;
 using EmployeeSite.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BikeRentalApi.Repositories.Extensions;
+using BikeRentalApi;
 
 namespace EmployeeSite.Controllers
 {
@@ -30,9 +30,9 @@ namespace EmployeeSite.Controllers
             IEnumerable<Reservation> res = await _resRepo.GetAsync(BikeRentalRoute.Reservations);
             IEnumerable<Bike> bike = await _bikeRepo.GetAsync(BikeRentalRoute.Bikes);
             IEnumerable<Customer> cust = await _custRepo.GetAsync(BikeRentalRoute.Customers);
-            foreach (Reservation r in res)
+            foreach(Reservation r in res)
             {
-                r.Customer = cust.FirstOrDefault(p => r.CustomerId == p.Id);
+                r.Customer = cust.FirstOrDefault(p=>r.CustomerId == p.Id);
                 r.Bike = bike.FirstOrDefault(p => p.Id == r.BikeId);
             }
             return View(res);
@@ -53,7 +53,7 @@ namespace EmployeeSite.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            Reservation res = await _resRepo.GetReservationId(id);
+            Reservation res = await _resRepo.GetAsync(id, BikeRentalRoute.Reservations);
             if (res == null)
                 return NotFound();
             await _resRepo.DeleteAsync(id, "reservation");
