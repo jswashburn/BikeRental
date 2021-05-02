@@ -36,7 +36,7 @@ namespace CustomerSite.Services
 
         public async Task<bool> ReservationExists(Bike bike)
         {
-            return await _reservationsRepo.GetByBikeId(bike.Id) != null;
+            return await _reservationsRepo.GetByBikeIdAsync(bike.Id) != null;
         }
 
         async Task<Reservation> PostNewReservation(Bike bike, Customer customer)
