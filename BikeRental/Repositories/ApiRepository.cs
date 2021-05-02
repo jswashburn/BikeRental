@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BikeRentalApi.Repositories
 {
-    public class ApiRepository<T> : IRepositoryAsync<T> where T : BaseEntity
+    public class ApiRepository<T> : IRepositoryAsync<T> where T : IEntity
     {
         public HttpClient Client { get; }
 
