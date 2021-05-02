@@ -24,7 +24,7 @@ namespace BikeRentalApi.Controllers
             IEnumerable<Reservation> reservation = _reservationsRepo.Get();
             if (reservation == null)
                 return NotFound();
-            return reservation.ToList();
+            return Ok(reservation.ToList());
         }
 
         // GET: api/Reservations/5
@@ -34,28 +34,34 @@ namespace BikeRentalApi.Controllers
             Reservation reservation = _reservationsRepo.Get(id);
             if (reservation == null)
                 return NotFound();
-            return reservation;
+            return Ok(reservation);
         }
 
         // PUT: api/Reservations/5
         [HttpPut("{id}")]
         public ActionResult<Reservation> PutReservation(Reservation reservation)
         {
-            return _reservationsRepo.Update(reservation);
+            Reservation updated = _reservationsRepo.Update(reservation);
+            return Ok(updated);
         }
 
         // POST: api/Reservations
         [HttpPost]
         public ActionResult<Reservation> PostReservation(Reservation reservation)
         {
-            return _reservationsRepo.Insert(reservation);
+            if (ReservationExists(reservation.Id))
+                return BadRequest($"Reservation Already exists! ID {reservation.Id}");
+
+            Reservation created = _reservationsRepo.Insert(reservation);
+            return CreatedAtAction(nameof(PostReservation), created);
         }
 
         // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
         public ActionResult<Reservation> DeleteReservation(int id)
         {
-            return _reservationsRepo.Delete(id);
+            Reservation deleted = _reservationsRepo.Delete(id);
+            return Ok(deleted);
         }
 
         bool ReservationExists(int id) => _reservationsRepo.Get().Any(r => r.Id == id);

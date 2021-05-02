@@ -24,7 +24,7 @@ namespace BikeRentalApi.Controllers
             IEnumerable<BikeStore> bikeStores = _storesRepo.Get();
             if (bikeStores == null)
                 return NotFound();
-            return bikeStores.ToList();
+            return Ok(bikeStores.ToList());
         }
 
         // GET: api/BikeStores/5
@@ -34,28 +34,34 @@ namespace BikeRentalApi.Controllers
             BikeStore bikeStore = _storesRepo.Get(id);
             if (bikeStore == null)
                 return NotFound();
-            return bikeStore;
+            return Ok(bikeStore);
         }
 
         // PUT: api/BikeStores/5
         [HttpPut("{id}")]
         public ActionResult<BikeStore> PutBikeStore(BikeStore bikeStore)
         {
-            return _storesRepo.Update(bikeStore);
+            BikeStore updated = _storesRepo.Update(bikeStore);
+            return Ok(updated);
         }
 
         // POST: api/BikeStores
         [HttpPost]
         public ActionResult<BikeStore> PostBikeStore(BikeStore bikeStore)
         {
-            return _storesRepo.Insert(bikeStore);
+            if (BikeStoreExists(bikeStore.Id))
+                return BadRequest($"BikeStore already exists! (BikeStore ID {bikeStore.Id})");
+
+            BikeStore created = _storesRepo.Insert(bikeStore);
+            return CreatedAtAction(nameof(PostBikeStore), created);
         }
 
         // DELETE: api/BikeStores/5
         [HttpDelete("{id}")]
         public ActionResult<BikeStore> DeleteBikeStore(int id)
         {
-            return _storesRepo.Delete(id);
+            BikeStore deleted = _storesRepo.Delete(id);
+            return Ok(deleted);
         }
 
         bool BikeStoreExists(int id) => _storesRepo.Get().Any(s => s.Id == id);
