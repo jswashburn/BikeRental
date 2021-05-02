@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using BikeRentalApi.Repositories.Extensions;
 
 namespace EmployeeSite.Controllers
 {
@@ -23,7 +24,7 @@ namespace EmployeeSite.Controllers
             _custRepo = cust;
             _bikeRepo = bike;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Reservation> res = await _resRepo.GetAsync(BikeRentalRoute.Reservations);
@@ -36,7 +37,7 @@ namespace EmployeeSite.Controllers
             }
             return View(res);
         }
-
+        [HttpGet]
         public IActionResult Privacy()
         {
             return View();
@@ -46,6 +47,15 @@ namespace EmployeeSite.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Reservation res = await _resRepo.GetReservationId(id);
+            if (res == null)
+                return NotFound();
+            await _resRepo.DeleteAsync(id, "reservation");
+            return View(nameof(Index));
         }
     }
 }
