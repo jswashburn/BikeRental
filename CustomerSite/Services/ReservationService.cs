@@ -7,12 +7,6 @@ using BikeRentalApi.Repositories.Extensions;
 
 namespace CustomerSite.Services
 {
-    public interface IReservationService
-    {
-        Task<Reservation> CreateReservation(Customer customer, int bikeId);
-        Task<Bike> GetBikeFromId(int bikeId);
-    }
-
     public class ReservationService : IReservationService
     {
         readonly IRepositoryAsync<Customer> _customersRepo;
