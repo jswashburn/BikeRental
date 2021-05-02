@@ -4,24 +4,26 @@
 }
 
 <div class="text-center">
+    
     <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
-    <h3 class="text-left">Browse: </h3>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <form asp-controller="Home" asp-action="Index">
-        @*<p>
+    <div class="text-left">
+        <h3>Browse: </h3>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <form asp-controller="Home" asp-action="Index">
+            <p>
 
-            <select asp-for="" asp-items="">
-                <option value="">All</option>
-            </select>
+                <select>
+                    <option value="">All</option>
+                </select>
 
-            Title: <input type="text" asp-for="SearchString" />
-            <input type="submit" value="Filter" />
-        </p>*@
-    </form>
-
-    @if (Model.Any())
+                Customer: <input type="text"/>
+                <input type="submit" value="Filter" />
+            </p>
+        </form>
+    </div>
+    @if (Model != null)
     {
         <table class="table table-hover">
             <thead class="thead-dark">
@@ -40,14 +42,12 @@
                 {
                     <tr>
                         <th scope="row">
-                            <a asp-controller="Home" asp-action=""
-                               class="btn btn-outline-success text-white bg-success rounded-pill">
+                            <a asp-controller="Home" asp-action="">
                                 Edit
                             </a>
                         </th>
                         <th scope="row">
-                            <a asp-action="Delete" asp-route-id="@res.Id"
-                               class="btn btn-outline-success text-white bg-danger rounded-pill">
+                            <a asp-action="Delete" asp-route-id="@res.Id">
                                 Delete
                             </a>
                         </th>
@@ -63,6 +63,6 @@
     }
     else
     {
-        <h3 class="text-center">No bikes available, go away please</h3>
+        <h3 class="text-center">There are no reservations! No money for you!</h3>
     }
 </div>

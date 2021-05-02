@@ -42,13 +42,15 @@ namespace EmployeeSite.Controllers
         {
             return View();
         }
-
+        public IActionResult Create()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             Reservation res = await _resRepo.GetReservationId(id);
