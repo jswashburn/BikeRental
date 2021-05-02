@@ -150,7 +150,7 @@ namespace BikeRentalApi.Data
                 new BikeStore
                 {
                     Id = 2,
-                    PhoneNumber =  "1-800-BIKE",
+                    PhoneNumber = "1-800-BIKE",
                     HourlyRate = 15.00m,
                     Discount = 0.10d,
                     Latitude = 37.749432m,
