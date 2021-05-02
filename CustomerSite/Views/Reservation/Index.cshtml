@@ -5,6 +5,7 @@
     string reserveButtonText = Model.Available ? "Reserve Now!" : "Check Availability";
     bool hasAllTerrain = Model.AllTerrainSuspension ?? false;
     bool hasElectric = Model.ElectricMotor ?? false;
+    bool invalidSubmission = (bool?)TempData["InvalidSubmit"] ?? false;
 }
 
 <div class="row align-items-center">
@@ -65,6 +66,10 @@
                 </tr>
             </tfoot>
         </table>
+        @if (invalidSubmission)
+        {
+            <em class="text-danger">Invalid form submission, try again</em>
+        }
     </div>
 </div>
 

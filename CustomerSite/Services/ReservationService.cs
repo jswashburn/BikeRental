@@ -31,8 +31,6 @@ namespace CustomerSite.Services
         public async Task<Bike> GetBikeFromId(int id)
         {
             Bike bike = await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
-            if (bike == null)
-                throw new ArgumentException($"Could not find bike {id}");
             return bike;
         }
 

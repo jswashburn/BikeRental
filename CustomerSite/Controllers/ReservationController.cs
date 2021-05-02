@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CustomerSite.Services;
-using System;
 
 namespace CustomerSite.Controllers
 {
@@ -17,16 +16,13 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            try
-            {
-                Bike requestedBike = await _reservationService.GetBikeFromId(id);
-                TempData["BikeId"] = id;
-                return View(requestedBike);
-            }
-            catch (ArgumentException)
-            {
-                return BadRequest();
-            }
+            Bike requestedBike = await _reservationService.GetBikeFromId(id);
+
+            if (requestedBike == null)
+                return NotFound();
+
+            TempData["BikeId"] = id;
+            return View(requestedBike);
         }
 
         [HttpPost]
@@ -35,14 +31,24 @@ namespace CustomerSite.Controllers
             int bikeId = (int)TempData["BikeId"];
             Bike bike = await _reservationService.GetBikeFromId(bikeId);
 
-            if (!await _reservationService.ReservationExists(bike))
-            {
-                Reservation createdReservation = await _reservationService
-                    .CreateReservation(customer, bikeId);
+            if (bike == null)
+                return BadRequest();
 
-                return View("ReservationConfirmed", createdReservation);
+            bool reservationExists = await _reservationService.ReservationExists(bike);
+
+            if (reservationExists)
+                return View("ReservationAlreadyExists", bike);
+
+            if (!ModelState.IsValid)
+            {
+                TempData["InvalidSubmit"] = true;
+                return View(nameof(Index), bike);
             }
-            return View("ReservationAlreadyExists", bike);
+
+            Reservation createdReservation = await _reservationService
+                .CreateReservation(customer, bikeId);
+
+            return View("ReservationConfirmed", createdReservation);
         }
     }
 }
