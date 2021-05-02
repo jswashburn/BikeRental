@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BikeRentalApi.Models;
+﻿using BikeRentalApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerSite.ViewComponents
 {
