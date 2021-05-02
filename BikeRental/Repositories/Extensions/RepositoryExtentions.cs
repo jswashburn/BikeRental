@@ -7,7 +7,7 @@ namespace BikeRentalApi.Repositories.Extensions
 {
     public static class RepositoryExtentions
     {
-        // Customer Repo extensions
+        // Sends GET to customers/email/{email} - returns Customer
         public static async Task<Customer> GetByEmailAsync(
             this IRepositoryAsync<Customer> repo, string email)
         {
@@ -16,27 +16,12 @@ namespace BikeRentalApi.Repositories.Extensions
             return await repo.DeserializeFromResponse<Customer>(response);
         }
 
-        // Reservation Repo extensions
-        public static async Task<Reservation> GetByBikeId(
-            this IRepositoryAsync<Reservation> repo, int id)
+        // Sends GET to bikes/reservation/{bikeId} - returns Reservation
+        public static async Task<Reservation> GetByBikeIdAsync(
+            this IRepositoryAsync<Reservation> repo, int bikeId)
         {
             using HttpResponseMessage response = await repo.Client
-                .GetAsync($"{BikeRentalRoute.ReservationsByBikeId}/{id}");
-            return await repo.DeserializeFromResponse<Reservation>(response);
-        }
-
-        public static async Task<Customer> GetCustomerAsync(
-            this IRepositoryAsync<Reservation> repo, int id)
-        {
-            using HttpResponseMessage response = await repo.Client
-                .GetAsync($"{BikeRentalRoute.CustomerFromReservation}/{id}");
-            return await repo.DeserializeFromResponse<Customer>(response);
-        }
-        public static async Task<Reservation> GetReservationId(
-            this IRepositoryAsync<Reservation> repo, int id)
-        {
-            using HttpResponseMessage response = await repo.Client
-                .GetAsync($"{BikeRentalRoute.Reservations}/{id}");
+                .GetAsync($"{BikeRentalRoute.ReservationsByBikeId}/{bikeId}");
             return await repo.DeserializeFromResponse<Reservation>(response);
         }
     }
