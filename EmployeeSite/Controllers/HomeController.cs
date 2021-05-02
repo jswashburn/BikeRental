@@ -53,7 +53,7 @@ namespace EmployeeSite.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            Reservation res = await _resRepo.GetReservationId(id);
+            Reservation res = await _resRepo.GetAsync(id, BikeRentalRoute.Reservations);
             if (res == null)
                 return NotFound();
             await _resRepo.DeleteAsync(id, "reservation");
