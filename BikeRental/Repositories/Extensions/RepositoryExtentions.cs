@@ -7,14 +7,7 @@ namespace BikeRentalApi.Repositories.Extensions
 {
     public static class RepositoryExtentions
     {
-        public static async Task<Bike> GetReservationByBike(
-            this IRepositoryAsync<Bike> repo, int id)
-        {
-            using HttpResponseMessage response = await repo.Client
-                .GetAsync($"{BikeRentalRoute.ReservationsByBikeId}/{id}");
-            return await repo.DeserializeFromResponse<Bike>(response);
-        }
-
+        // Customer Repo extensions
         public static async Task<Customer> GetByEmailAsync(
             this IRepositoryAsync<Customer> repo, string email)
         {
@@ -23,6 +16,7 @@ namespace BikeRentalApi.Repositories.Extensions
             return await repo.DeserializeFromResponse<Customer>(response);
         }
 
+        // Reservation Repo extensions
         public static async Task<Reservation> GetByBikeId(
             this IRepositoryAsync<Reservation> repo, int id)
         {
