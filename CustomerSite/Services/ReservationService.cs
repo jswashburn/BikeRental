@@ -51,6 +51,10 @@ namespace CustomerSite.Services
             reservation = await _reservationsRepo
                 .InsertAsync(reservation, BikeRentalRoute.Reservations);
 
+            bike.Available = false;
+            bike = await _bikesRepo
+                .UpdateAsync(bike, BikeRentalRoute.Bikes);
+
             reservation.Customer = customer;
             reservation.Bike = bike;
 
