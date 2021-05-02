@@ -6,6 +6,20 @@
 <div class="text-center">
     <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
     <h3 class="text-left">Browse: </h3>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <form asp-controller="Home" asp-action="Index">
+        @*<p>
+
+            <select asp-for="" asp-items="">
+                <option value="">All</option>
+            </select>
+
+            Title: <input type="text" asp-for="SearchString" />
+            <input type="submit" value="Filter" />
+        </p>*@
+    </form>
 
     @if (Model.Any())
     {
@@ -25,13 +39,23 @@
                 @foreach (Reservation res in Model)
                 {
                     <tr>
-                        <th scope="row"><a class="btn btn-outline-success text-white bg-success rounded-pill">Edit</a></th>
-                        <th scope="row"><a class="btn btn-outline-success text-white bg-danger rounded-pill">Delete</a></th>
-                        <td><h4>@res.Customer.LastName</h4></td>
-                        <td><h4>@res.BikeId, @res.Bike.BikeStyle</h4></td>
-                        <td><h4>@res.CurrentStoreId, @res.Bike.OwningStoreId</h4></td>
-                        <td><h4>@res.DateReserved</h4></td>
-                        <td><h4>@res.DateReturned</h4></td>
+                        <th scope="row">
+                            <a asp-controller="Home" asp-action=""
+                               class="btn btn-outline-success text-white bg-success rounded-pill">
+                                Edit
+                            </a>
+                        </th>
+                        <th scope="row">
+                            <a asp-action="Delete" asp-route-id="@res.Id"
+                               class="btn btn-outline-success text-white bg-danger rounded-pill">
+                                Delete
+                            </a>
+                        </th>
+                        <td>@res.Customer.LastName</td>
+                        <td>@res.BikeId, @res.Bike.BikeStyle</td>
+                        <td>@res.CurrentStoreId, @res.Bike.OwningStoreId</td>
+                        <td>@res.DateReserved</td>
+                        <td>@res.DateReturned</td>
                     </tr>
                 }
             </tbody>

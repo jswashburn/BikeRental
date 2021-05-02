@@ -32,5 +32,12 @@ namespace BikeRentalApi.Repositories.Extensions
                 .GetAsync($"{BikeRentalRoute.CustomerFromReservation}/{id}");
             return await repo.DeserializeFromResponse<Customer>(response);
         }
+        public static async Task<Reservation> GetReservationId(
+            this IRepositoryAsync<Reservation> repo, int id)
+        {
+            using HttpResponseMessage response = await repo.Client
+                .GetAsync($"{BikeRentalRoute.Reservations}/{id}");
+            return await repo.DeserializeFromResponse<Reservation>(response);
+        }
     }
 }
