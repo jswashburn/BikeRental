@@ -11,6 +11,5 @@
 
         public const string CustomersByEmail = Customers + "/email";
         public const string ReservationsByBikeId = Bikes + "/reservation";
-        public const string CustomerFromReservation = Reservations + "/customer";
     }
 }
