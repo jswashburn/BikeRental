@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CustomerSite.Services;
+using System;
 
 namespace CustomerSite.Controllers
 {
@@ -16,19 +17,32 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            Bike requestedBike = await _reservationService.GetBikeFromId(id);
-            TempData["BikeId"] = id;
-            return View(requestedBike);
+            try
+            {
+                Bike requestedBike = await _reservationService.GetBikeFromId(id);
+                TempData["BikeId"] = id;
+                return View(requestedBike);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateReservation(Customer customer)
         {
             int bikeId = (int)TempData["BikeId"];
-            Reservation createdReservation = await _reservationService
-                .CreateReservation(customer, bikeId);
+            Bike bike = await _reservationService.GetBikeFromId(bikeId);
 
-            return View("ReservationConfirmed", createdReservation);
+            if (!await _reservationService.ReservationExists(bike))
+            {
+                Reservation createdReservation = await _reservationService
+                    .CreateReservation(customer, bikeId);
+
+                return View("ReservationConfirmed", createdReservation);
+            }
+            return View("ReservationAlreadyExists", bike);
         }
     }
 }
