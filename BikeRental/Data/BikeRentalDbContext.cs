@@ -156,6 +156,8 @@ namespace BikeRentalApi.Data
 
                 entity.Property(e => e.DateReserved).HasColumnName("Date_Reserved");
 
+                entity.Property(e => e.DateDue).HasColumnName("Date_Due");
+
                 entity.Property(e => e.DateReturned).HasColumnName("Date_Returned");
 
                 entity.HasOne(d => d.Bike)
