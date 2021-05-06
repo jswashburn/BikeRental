@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BikeRentalApi.Models;
+using CustomerSite.Models;
 
 namespace CustomerSite.ViewComponents
 {
@@ -12,7 +13,13 @@ namespace CustomerSite.ViewComponents
         public IViewComponentResult Invoke(int bikeId)
         {
             TempData["BikeId"] = bikeId;
-            return View(new Customer());
+
+            var vm = new CustomerReservationViewModel
+            {
+                Customer = new Customer(),
+            };
+
+            return View(vm);
         }
     }
 }

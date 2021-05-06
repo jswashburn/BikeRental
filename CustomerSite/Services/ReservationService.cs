@@ -21,11 +21,13 @@ namespace CustomerSite.Services
             _bikesRepo = bikes;
         }
 
-        public async Task<Reservation> CreateReservation(Customer customer, int bikeId)
+        public async Task<Reservation> CreateReservation(Customer customer, int bikeId, int daysRequested)
         {
             Bike bike = await GetBikeFromId(bikeId);
             Customer existing = await PostCustomerIfEmailNotFound(customer);
-            return await PostNewReservation(bike, existing);
+            Reservation created = await PostNewReservation(bike, existing, daysRequested);
+
+            return created;
         }
 
         public async Task<Bike> GetBikeFromId(int id)
@@ -39,13 +41,14 @@ namespace CustomerSite.Services
             return await _reservationsRepo.GetByBikeIdAsync(bike.Id) != null;
         }
 
-        async Task<Reservation> PostNewReservation(Bike bike, Customer customer)
+        async Task<Reservation> PostNewReservation(Bike bike, Customer customer, int daysRequested)
         {
             Reservation reservation = new Reservation
             {
                 BikeId = bike.Id,
                 CustomerId = customer.Id,
-                DateReserved = DateTime.Now
+                DateReserved = DateTime.Now,
+                DateDue = DateTime.Now.AddDays(daysRequested)
             };
 
             reservation = await _reservationsRepo
