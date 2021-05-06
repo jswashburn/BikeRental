@@ -1,8 +1,9 @@
 ﻿@model Bike
 @addTagHelper *, CustomerSite
-@{ 
+@{
     string reserveButtonClass = Model.Available ? "btn-success" : "btn-warning";
     string reserveButtonText = Model.Available ? "Reserve Now!" : "Check Availability";
+    string reserveButtonDataTarget = Model.Available ? "#reservationModal" : "#availabilityModal";
     bool hasAllTerrain = Model.AllTerrainSuspension ?? false;
     bool hasElectric = Model.ElectricMotor ?? false;
     bool invalidSubmission = (bool?)TempData["InvalidSubmit"] ?? false;
@@ -58,7 +59,7 @@
             <tfoot>
                 <tr>
                     <th colspan="2">
-                        <button type="button" data-toggle="modal" data-target="#reservationModal"
+                        <button type="button" data-toggle="modal" data-target=@reserveButtonDataTarget
                                 class="btn @reserveButtonClass rounded-pill">
                             <strong>@reserveButtonText</strong>
                         </button>
@@ -73,6 +74,26 @@
     </div>
 </div>
 
+@*Check availability modal*@
+<div class="modal fade" id="availabilityModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Availability
+                </h5>
+            </div>
+            <div class="modal-body">
+                <vc:availability-check bike-id="@Model.Id" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Reservation modal*@
 <div class="modal fade" id="reservationModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -83,7 +104,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="CreateReservation" method="post" id="reservationForm">
-                    <vc:reservation-form bike-id="@Model.Id"/>
+                    <vc:reservation-form bike-id="@Model.Id" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -95,4 +116,4 @@
 </div>
 
 @*https://placeholder.com/ - place holder images
-https://www.bootdey.com/snippets/view/product-full-detail#preview example product page*@
+    https://www.bootdey.com/snippets/view/product-full-detail#preview example product page*@
