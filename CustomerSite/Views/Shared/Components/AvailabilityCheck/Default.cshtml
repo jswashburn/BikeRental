@@ -1,13 +1,13 @@
 ﻿@model Reservation
 @{ 
     string message;
-    if (Model.DateDue < DateTime.Now)
+    if (Model?.DateDue < DateTime.Now)
     {
         message = "We apologize, this bike seems to be late! Please check back soon. (╯°□°）╯︵ ┻━┻";
     }
     else
     {
-        message = $"Please check back {Model.DateDue.ToShortDateString()} ⏰";
+        message = $"Please check back {Model?.DateDue.ToShortDateString()} ⏰";
     }
 }
 
