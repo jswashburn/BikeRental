@@ -8,8 +8,8 @@ namespace BikeRentalApi.Models.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        BikeRentalDbContext _context;
-        DbSet<T> _entities;
+        readonly BikeRentalDbContext _context;
+        readonly DbSet<T> _entities;
 
         public Repository(BikeRentalDbContext context)
         {

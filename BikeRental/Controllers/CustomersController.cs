@@ -10,7 +10,7 @@ namespace BikeRentalApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        IRepository<Customer> _customersRepo;
+        readonly IRepository<Customer> _customersRepo;
 
         public CustomersController(IRepository<Customer> customers)
         {

@@ -8,7 +8,7 @@ namespace CustomerSite.Controllers
 {
     public class ReservationController : Controller
     {
-        IReservationService _reservationService;
+        readonly IReservationService _reservationService;
 
         public ReservationController(IReservationService reservationService)
         {
