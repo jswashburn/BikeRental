@@ -61,9 +61,6 @@ namespace CustomerSite.Services
 
         async Task<Customer> PostCustomerIfEmailNotFound(Customer customer) =>
             await _customersRepo.GetByEmailAsync(customer.EmailAddress) ??
-            await PostNewCustomer(customer);
-
-        async Task<Customer> PostNewCustomer(Customer customer) =>
             await _customersRepo.InsertAsync(customer, BikeRentalRoute.Customers);
     }
 }
