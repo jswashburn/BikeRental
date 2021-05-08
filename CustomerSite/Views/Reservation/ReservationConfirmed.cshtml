@@ -6,6 +6,11 @@
     An email with reservation details has been sent to <em>@Model.Customer.EmailAddress</em>
 </p>
 <p class="text-center">
+    <strong>
+        Your card has been charged @Model.GrandTotal
+    </strong>
+</p>
+<p class="text-center">
     Please return <em>no later than</em> @Model.DateDue.ToShortDateString() to avoid late penalty
 </p>
 <p class="text-center">

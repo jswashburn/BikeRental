@@ -92,6 +92,7 @@ namespace BikeRentalApi.Data
                     DateReserved = DateTime.Now.AddDays(-32), // reserved it for 30 days
                     DateDue = DateTime.Now.AddDays(-2),       
                     DateReturned = DateTime.Now,              // returned today, 2 days after due
+                    GrandTotal = 1000.00m,                    // seeded value not actually accurate
                     Archive = true
                 },
                 new Reservation
@@ -102,6 +103,7 @@ namespace BikeRentalApi.Data
                     CurrentStoreId = 1,
                     DateReserved = DateTime.Now.AddDays(-14),
                     DateDue = DateTime.Now.AddDays(14),
+                    GrandTotal = 250.00m,
                     Archive = true
                 });
         }

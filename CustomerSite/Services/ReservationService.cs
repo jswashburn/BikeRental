@@ -43,7 +43,8 @@ namespace CustomerSite.Services
                 BikeId = bike.Id,
                 CustomerId = customer.Id,
                 DateReserved = DateTime.Now,
-                DateDue = DateTime.Now.AddDays(daysRequested)
+                DateDue = DateTime.Now.AddDays(daysRequested),
+                GrandTotal = CalculateGrandTotal(bike, daysRequested)
             };
 
             reservation = await _reservationsRepo
@@ -59,8 +60,25 @@ namespace CustomerSite.Services
             return reservation;
         }
 
-        async Task<Customer> PostCustomerIfEmailNotFound(Customer customer) =>
-            await _customersRepo.GetByEmailAsync(customer.EmailAddress) ??
-            await _customersRepo.InsertAsync(customer, BikeRentalRoute.Customers);
+        async Task<Customer> PostCustomerIfEmailNotFound(Customer customer)
+        {
+
+            Customer existing = await _customersRepo
+                .GetByEmailAsync(customer.EmailAddress);
+
+            if (existing != null)
+                return existing;
+
+            Customer newCustomer = await _customersRepo
+                .InsertAsync(customer, BikeRentalRoute.Customers);
+
+            return newCustomer;
+        }
+
+        decimal CalculateGrandTotal(Bike bike, int daysRequested)
+        {
+            decimal subtotal = bike.Price * daysRequested;
+            return subtotal + (bike.Surcharge ?? 0);
+        }
     }
 }
