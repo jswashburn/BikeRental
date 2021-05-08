@@ -14,7 +14,6 @@ namespace CustomerSite.ViewComponents
         {
             var vm = new CustomerReservationViewModel
             {
-                Customer = new Customer(),
                 RequestedBikeId = bikeId
             };
 
