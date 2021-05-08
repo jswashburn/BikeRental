@@ -1,10 +1,16 @@
 ﻿@model Reservation
 
-<h2>Thank you, @Model.Customer.FirstName!</h2>
+<h2 class="text-center">Thank you, @Model.Customer.FirstName!</h2>
 <p class="text-center">
     Your reservation for bike @Model.BikeId has been requested.
-    An email has been sent to <em>@Model.Customer.EmailAddress</em>
+    An email with reservation details has been sent to <em>@Model.Customer.EmailAddress</em>
 </p>
-<p>
-    <a asp-controller="Home">Reserve More Bikes!</a>
+<p class="text-centerg">
+    Please return <em>no later than</em> @Model.DateDue.ToShortDateString() to avoid late penalty
+</p>
+<p class="text-center">
+    <a asp-controller="Home" asp-action="Index"
+        class="btn btn-primary rounded-pill">
+        <strong>Reserve More Bikes!</strong>
+    </a>
 </p>

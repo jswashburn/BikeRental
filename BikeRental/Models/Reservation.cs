@@ -8,8 +8,9 @@ namespace BikeRentalApi.Models
         public int BikeId { get; set; }
         public int? CurrentStoreId { get; set; }
         public bool? Archive { get; set; }
-        public DateTime DateReserved { get; set; }
-        public DateTime? DateReturned { get; set; }
+        public DateTime DateReserved { get; set; }  // set when reserve button is clicked
+        public DateTime DateDue { get; set; }       // chosen by user
+        public DateTime? DateReturned { get; set; } // set by employee
 
         public virtual Bike Bike { get; set; }
         public virtual BikeStore CurrentStore { get; set; }

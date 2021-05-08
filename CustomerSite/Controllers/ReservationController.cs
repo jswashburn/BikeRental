@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CustomerSite.Services;
+using CustomerSite.Models;
 
 namespace CustomerSite.Controllers
 {
@@ -26,7 +27,7 @@ namespace CustomerSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation(Customer customer)
+        public async Task<IActionResult> CreateReservation(CustomerReservationViewModel vm)
         {
             int bikeId = (int)TempData["BikeId"];
             Bike bike = await _reservationService.GetBikeFromId(bikeId);
@@ -46,7 +47,7 @@ namespace CustomerSite.Controllers
             }
 
             Reservation createdReservation = await _reservationService
-                .CreateReservation(customer, bikeId);
+                .CreateReservation(vm.Customer, bikeId, vm.DaysRequested);
 
             return View("ReservationConfirmed", createdReservation);
         }
