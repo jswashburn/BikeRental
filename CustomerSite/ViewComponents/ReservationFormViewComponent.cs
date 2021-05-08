@@ -12,11 +12,10 @@ namespace CustomerSite.ViewComponents
 
         public IViewComponentResult Invoke(int bikeId)
         {
-            TempData["BikeId"] = bikeId;
-
             var vm = new CustomerReservationViewModel
             {
                 Customer = new Customer(),
+                RequestedBikeId = bikeId
             };
 
             return View(vm);
