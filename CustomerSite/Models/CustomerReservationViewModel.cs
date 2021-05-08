@@ -7,5 +7,6 @@ namespace CustomerSite.Models
     {
         public Customer Customer { get; set; }
         public int DaysRequested { get; set; }
+        public int RequestedBikeId { get; set; }
     }
 }
