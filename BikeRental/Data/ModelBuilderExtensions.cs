@@ -39,7 +39,7 @@ namespace BikeRentalApi.Data
                     Price = 60.00m,
                     ElectricMotor = false,
                     AllTerrainSuspension = null,
-                    Available = true,
+                    Available = false,
                     BikeStyle = "Road"
                 },
                 new Bike
@@ -92,6 +92,16 @@ namespace BikeRentalApi.Data
                     DateReserved = DateTime.Now.AddDays(-32), // reserved it for 30 days
                     DateDue = DateTime.Now.AddDays(-2),       
                     DateReturned = DateTime.Now,              // returned today, 2 days after due
+                    Archive = true
+                },
+                new Reservation
+                {
+                    Id = 2,
+                    CustomerId = 1,
+                    BikeId = 2,
+                    CurrentStoreId = 1,
+                    DateReserved = DateTime.Now.AddDays(-14),
+                    DateDue = DateTime.Now.AddDays(14),
                     Archive = true
                 });
         }
