@@ -154,6 +154,7 @@ namespace BikeRentalApi.Data
                 new BikeStore
                 {
                     Id = 1,
+                    Name = "Larry's Bike Shop",
                     PhoneNumber = "1-800-BIKE",
                     HourlyRate = 15.00m,
                     Discount = 0.10d,
@@ -163,6 +164,7 @@ namespace BikeRentalApi.Data
                 new BikeStore
                 {
                     Id = 2,
+                    Name = "Timmy Got The Wheels",
                     PhoneNumber = "1-800-BIKE",
                     HourlyRate = 15.00m,
                     Discount = 0.10d,

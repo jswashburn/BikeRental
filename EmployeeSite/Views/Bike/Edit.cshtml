@@ -1,0 +1,67 @@
+﻿@model BikeRentalApi.Models.Bike
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="OwningStore" class="control-label"></label>
+                <input asp-for="OwningStore" class="form-control" />
+                <span asp-validation-for="OwningStore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrameSize" class="control-label"></label>
+                <input asp-for="FrameSize" class="form-control" />
+                <span asp-validation-for="FrameSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surcharge" class="control-label"></label>
+                <input asp-for="Surcharge" class="form-control" />
+                <span asp-validation-for="Surcharge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ElectricMotor" class="control-label"></label>
+                <input asp-for="ElectricMotor" class="form-control" />
+                <span asp-validation-for="ElectricMotor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AllTerrainSuspension" class="control-label"></label>
+                <input asp-for="AllTerrainSuspension" class="form-control" />
+                <span asp-validation-for="AllTerrainSuspension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Available" class="control-label"></label>
+                <input asp-for="Available" class="form-control" />
+                <span asp-validation-for="Available" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BikeStyle" class="control-label"></label>
+                <input asp-for="BikeStyle" class="form-control" />
+                <span asp-validation-for="BikeStyle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
