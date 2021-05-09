@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bike>
+﻿@model IEnumerable<BikeStore>
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,7 +11,7 @@
         <p>
             <a asp-action="Create">Create New</a>
         </p>
-        <form asp-controller="Bike" asp-action="Index">
+        <form asp-controller="Home" asp-action="Index">
             <p>
                 Customer: <input type="text"/>
                 <input type="submit" value="Filter" />
@@ -25,30 +25,34 @@
                 <tr>
                     <th scope="col"></th>
                     <th scope="col"></th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Frame Size</th>
-                    <th scope="col">Bike Style</th>
-                    <th scope="col">Price</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Hourly Rate</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Longitude</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Bike bike in Model)
+                @foreach (BikeStore store in Model)
                 {
                 <tr>
                     <th scope="row">
-                        <a asp-controller="Bike" asp-action="Edit">
+                        <a asp-controller="Home" asp-action="Create">
                             Edit
                         </a>
                     </th>
                     <th scope="row">
-                        <a asp-action="Delete" asp-route-id="@bike.Id">
+                        <a asp-action="Delete" asp-route-id="@store.Id">
                             Delete
                         </a>
                     </th>
-                    <td>@bike.Id</td>
-                    <td>@bike.FrameSize</td>
-                    <td>@bike.BikeStyle</td>
-                    <td>@bike.Price</td>
+                    <td>@store.Name</td>
+                    <td>@store.PhoneNumber</td>
+                    <td>@store.HourlyRate</td>
+                    <td>@store.Discount</td>
+                    <td>@store.Latitude</td>
+                    <td>@store.Longitude</td>
                 </tr>
                 }
             </tbody>

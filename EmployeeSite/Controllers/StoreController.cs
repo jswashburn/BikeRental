@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 using BikeRentalApi.Repositories.Extensions;
 using BikeRentalApi;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http;
 
 namespace EmployeeSite.Controllers
 {
-    public class BikeController : Controller
+    public class StoreController : Controller
     {
-        readonly IRepositoryAsync<Bike> _bikeRepo;
+        readonly IRepositoryAsync<BikeStore> _storeRepo;
 
-        public BikeController(IRepositoryAsync<Bike> bike)
+        public StoreController(IRepositoryAsync<BikeStore> store)
         {
-            _bikeRepo = bike;
+            _storeRepo = store;
         }
         // GET: BikeController
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Bike> bike = await _bikeRepo.GetAsync(BikeRentalRoute.Bikes);
-            return View(bike);
+            IEnumerable<BikeStore> store = await _storeRepo.GetAsync(BikeRentalRoute.BikeStores);
+            return View(store);
         }
         [HttpGet]
         public IActionResult Privacy()
@@ -36,22 +35,6 @@ namespace EmployeeSite.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind("StoreId,JobTitle,FirstName,LastName,PhoneNumber")] Bike bike)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["InvalidSubmit"] = true;
-                return View(nameof(Index), bike);
-            }
-            bike = await _bikeRepo.InsertAsync(bike, BikeRentalRoute.Bikes);
-            return View("Bike created", bike);
-        }
-            public IActionResult Edit()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -59,10 +42,10 @@ namespace EmployeeSite.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            Bike res = await _bikeRepo.GetAsync(id, BikeRentalRoute.Reservations);
+            BikeStore res = await _storeRepo.GetAsync(id, BikeRentalRoute.BikeStores);
             if (res == null)
                 return NotFound();
-            await _bikeRepo.DeleteAsync(id, "reservation");
+            await _storeRepo.DeleteAsync(id, "reservation");
             return View(nameof(Index));
         }
     }

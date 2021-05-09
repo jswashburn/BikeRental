@@ -10,7 +10,7 @@ namespace BikeRentalApi.Models
             Employees = new HashSet<Employee>();
             Reservations = new HashSet<Reservation>();
         }
-
+        public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public decimal? HourlyRate { get; set; }
         public double? Discount { get; set; }
