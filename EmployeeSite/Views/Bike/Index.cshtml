@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Bike>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    
+    <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
+    <div class="text-left">
+        <h3>Browse: </h3>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <form asp-controller="Home" asp-action="Index">
+            <p>
+                Customer: <input type="text"/>
+                <input type="submit" value="Filter" />
+            </p>
+        </form>
+    </div>
+    @if (Model != null)
+    {
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Frame Size</th>
+                    <th scope="col">Bike Style</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Bike bike in Model)
+                {
+                <tr>
+                    <th scope="row">
+                        <a asp-controller="Home" asp-action="Create">
+                            Edit
+                        </a>
+                    </th>
+                    <th scope="row">
+                        <a asp-action="Delete" asp-route-id="@bike.Id">
+                            Delete
+                        </a>
+                    </th>
+                    <td>@bike.Id</td>
+                    <td>@bike.FrameSize</td>
+                    <td>@bike.BikeStyle</td>
+                    <td>@bike.Price</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-center">There are no reservations! No money for you!</h3>
+    }
+</div>

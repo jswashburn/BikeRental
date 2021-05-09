@@ -8,56 +8,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using BikeRentalApi.Repositories.Extensions;
 using BikeRentalApi;
+using Microsoft.Extensions.Logging;
 
 namespace EmployeeSite.Controllers
 {
     public class HomeController : Controller
     {
-        readonly IRepositoryAsync<Reservation> _resRepo;
-        readonly IRepositoryAsync<Customer> _custRepo;
-        readonly IRepositoryAsync<Bike> _bikeRepo;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IRepositoryAsync<Reservation> res, IRepositoryAsync<Customer> cust,
-            IRepositoryAsync<Bike> bike)
+        public HomeController(ILogger<HomeController> logger)
         {
-            _resRepo = res;
-            _custRepo = cust;
-            _bikeRepo = bike;
+            _logger = logger;
         }
-        [HttpGet]
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index()
         {
-            IEnumerable<Reservation> res = await _resRepo.GetAsync(BikeRentalRoute.Reservations);
-            IEnumerable<Bike> bike = await _bikeRepo.GetAsync(BikeRentalRoute.Bikes);
-            IEnumerable<Customer> cust = await _custRepo.GetAsync(BikeRentalRoute.Customers);
-            foreach(Reservation r in res)
-            {
-                r.Customer = cust.FirstOrDefault(p=>r.CustomerId == p.Id);
-                r.Bike = bike.FirstOrDefault(p => p.Id == r.BikeId);
-            }
-            return View(res);
+            return View();
         }
-        [HttpGet]
+
         public IActionResult Privacy()
         {
             return View();
         }
-        public IActionResult Create()
-        {
-            return View();
-        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public async Task<IActionResult> Delete(int id)
-        {
-            Reservation res = await _resRepo.GetAsync(id, BikeRentalRoute.Reservations);
-            if (res == null)
-                return NotFound();
-            await _resRepo.DeleteAsync(id, "reservation");
-            return View(nameof(Index));
         }
     }
 }
