@@ -4,65 +4,47 @@
 }
 
 <div class="text-center">
-    
+
     <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
     <div class="text-left">
-        <h3>Browse: </h3>
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-        <form asp-controller="Home" asp-action="Index">
-            <p>
-
-                <select>
-                    <option value="">All</option>
-                </select>
-
-                Customer: <input type="text"/>
-                <input type="submit" value="Filter" />
-            </p>
-        </form>
+        <div class="d-flex flex-row justify-content-end p-3">
+            <div>
+                <button id="btnShowModal" type="button" class="btn btn-dark mr-2">Sign In</button>
+                <div class="modal fade" tabindex="-1" id="loginModal"
+                     data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text"
+                                               placeholder="Login Username" id="inputUserName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Login Password"
+                                               type="password" id="inputPassword" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <a type="button" class="btn btn-dark" asp-controller="Reservation" asp-action="Index">
+                                    Sign
+                                </a>
+                                <button type="button" id="btnHideModal" class="btn btn-dark">
+                                    Hide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a asp-controller="Home" asp-action="Registration" class="btn btn-dark">Register</a>
+        </div>
     </div>
-    @if (Model != null)
-    {
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Bike Id, Style</th>
-                    <th scope="col">Current Store, Owning Store</th>
-                    <th scope="col">Date Reserved</th>
-                    <th scope="col">Date Returned</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Reservation res in Model)
-                {
-                    <tr>
-                        <th scope="row">
-                            <a asp-controller="Home" asp-action="">
-                                Edit
-                            </a>
-                        </th>
-                        <th scope="row">
-                            <a asp-action="Delete" asp-route-id="@res.Id">
-                                Delete
-                            </a>
-                        </th>
-                        <td>@res.Customer.LastName</td>
-                        <td>@res.BikeId, @res.Bike.BikeStyle</td>
-                        <td>@res.CurrentStoreId, @res.Bike.OwningStoreId</td>
-                        <td>@res.DateReserved</td>
-                        <td>@res.DateReturned</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <h3 class="text-center">There are no reservations! No money for you!</h3>
-    }
 </div>
+

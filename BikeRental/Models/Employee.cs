@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeRentalApi.Models
 {
@@ -16,5 +17,7 @@ namespace BikeRentalApi.Models
         public virtual BikeStore Store { get; set; }
         public virtual Employee SupervisorNavigation { get; set; }
         public virtual ICollection<Employee> InverseSupervisorNavigation { get; set; }
+        [NotMapped]
+        public string SearchString { get; set; }
     }
 }

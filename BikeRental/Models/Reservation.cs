@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeRentalApi.Models
 {
@@ -15,5 +16,7 @@ namespace BikeRentalApi.Models
         public virtual Bike Bike { get; set; }
         public virtual BikeStore CurrentStore { get; set; }
         public virtual Customer Customer { get; set; }
+        [NotMapped]
+        public string SearchString { get; set; }
     }
 }

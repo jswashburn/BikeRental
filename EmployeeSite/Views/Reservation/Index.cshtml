@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    
+    <h1 class="display-4 pb-4">Welcome To the Bike Rental Agency!</h1>
+    <div class="text-left">
+        <h3>Browse: </h3>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <form asp-controller="Home" asp-action="Index">
+            <p>
+                Customer: <input type="text"/>
+                <input type="submit" value="Filter" />
+            </p>
+        </form>
+    </div>
+    @if (Model != null)
+    {
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Bike Id, Style</th>
+                    <th scope="col">Current Store, Owning Store</th>
+                    <th scope="col">Date Reserved</th>
+                    <th scope="col">Date Returned</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Reservation res in Model)
+                {
+                    <tr>
+                        <th scope="row">
+                            <a asp-controller="Home" asp-action="Create">
+                                Edit
+                            </a>
+                        </th>
+                        <th scope="row">
+                            <a asp-action="Delete" asp-route-id="@res.Id">
+                                Delete
+                            </a>
+                        </th>
+                        <td>@res.Customer.LastName</td>
+                        <td>@res.BikeId, @res.Bike.BikeStyle</td>
+                        <td>@res.CurrentStoreId, @res.Bike.OwningStoreId</td>
+                        <td>@res.DateReserved</td>
+                        <td>@res.DateReturned</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-center">There are no reservations! No money for you!</h3>
+    }
+</div>
