@@ -1,6 +1,7 @@
 ﻿@model CustomerReservationViewModel
 
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input hidden asp-for="RequestedBikeId" />
 <div class="form-group">
     <label asp-for="Customer.FirstName">First Name</label>
     <input class="form-control" asp-for="Customer.FirstName" />

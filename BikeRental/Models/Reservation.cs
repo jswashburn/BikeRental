@@ -12,6 +12,7 @@ namespace BikeRentalApi.Models
         public DateTime DateReserved { get; set; }  // set when reserve button is clicked
         public DateTime DateDue { get; set; }       // chosen by user
         public DateTime? DateReturned { get; set; } // set by employee
+        public decimal GrandTotal { get; set; }
 
         public virtual Bike Bike { get; set; }
         public virtual BikeStore CurrentStore { get; set; }

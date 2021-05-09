@@ -8,7 +8,7 @@ namespace CustomerSite.Controllers
 {
     public class ReservationController : Controller
     {
-        IReservationService _reservationService;
+        readonly IReservationService _reservationService;
 
         public ReservationController(IReservationService reservationService)
         {
@@ -22,32 +22,27 @@ namespace CustomerSite.Controllers
             if (requestedBike == null)
                 return NotFound();
 
-            TempData["BikeId"] = id;
             return View(requestedBike);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateReservation(CustomerReservationViewModel vm)
         {
-            int bikeId = (int)TempData["BikeId"];
-            Bike bike = await _reservationService.GetBikeFromId(bikeId);
+            Bike bike = await _reservationService.GetBikeFromId(vm.RequestedBikeId);
 
             if (bike == null)
                 return BadRequest();
 
-            bool reservationExists = await _reservationService.ReservationExists(bike);
-
-            if (reservationExists)
-                return View("ReservationAlreadyExists", bike);
-
+            // Refresh page if model validation fails
             if (!ModelState.IsValid)
             {
                 TempData["InvalidSubmit"] = true;
                 return View(nameof(Index), bike);
             }
 
+            // Create a reservation and move to confirmation page
             Reservation createdReservation = await _reservationService
-                .CreateReservation(vm.Customer, bikeId, vm.DaysRequested);
+                .CreateReservation(vm.Customer, vm.RequestedBikeId, vm.DaysRequested);
 
             return View("ReservationConfirmed", createdReservation);
         }

@@ -8,6 +8,5 @@ namespace CustomerSite.Services
     {
         Task<Reservation> CreateReservation(Customer customer, int bikeId, int daysRequested);
         Task<Bike> GetBikeFromId(int bikeId);
-        Task<bool> ReservationExists(Bike bike);
     }
 }

@@ -10,7 +10,7 @@ namespace BikeRentalApi.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        IRepository<Employee> _employeesRepo;
+        readonly IRepository<Employee> _employeesRepo;
 
         public EmployeesController(IRepository<Employee> employees)
         {
