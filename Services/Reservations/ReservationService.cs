@@ -1,11 +1,11 @@
 ﻿using BikeRentalApi;
 using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
-using BikeRentalApi.Repositories.Extensions;
+using Services.Extensions;
+using Services.Repositories;
 using System;
 using System.Threading.Tasks;
 
-namespace CustomerSite.Services
+namespace Services.Reservations
 {
     public class ReservationService : IReservationService
     {

@@ -1,9 +1,10 @@
-﻿using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
+﻿using BikeRentalApi;
+using BikeRentalApi.Models;
+using Services.Repositories;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BikeRentalApi.Repositories.Extensions
+namespace Services.Extensions
 {
     public static class RepositoryExtentions
     {
