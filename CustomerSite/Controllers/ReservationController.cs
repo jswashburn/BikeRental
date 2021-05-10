@@ -17,7 +17,7 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            Bike requestedBike = await _reservationService.GetBikeFromId(id);
+            Bike requestedBike = await _reservationService.FindBikeAsync(id);
 
             if (requestedBike == null)
                 return NotFound();
@@ -28,7 +28,7 @@ namespace CustomerSite.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReservation(CustomerReservationViewModel vm)
         {
-            Bike bike = await _reservationService.GetBikeFromId(vm.RequestedBikeId);
+            Bike bike = await _reservationService.FindBikeAsync(vm.RequestedBikeId);
 
             if (bike == null)
                 return BadRequest();

@@ -6,6 +6,6 @@ namespace Services.Reservations
     public interface IReservationService
     {
         Task<Reservation> CreateReservation(Customer customer, int bikeId, int daysRequested);
-        Task<Bike> GetBikeFromId(int bikeId);
+        Task<Bike> FindBikeAsync(int bikeId);
     }
 }
