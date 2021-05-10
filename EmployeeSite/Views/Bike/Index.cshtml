@@ -36,7 +36,7 @@
                 {
                 <tr>
                     <th scope="row">
-                        <a asp-controller="Bike" asp-action="Edit">
+                        <a asp-controller="Bike" asp-action="Edit" asp-route-id="@bike.Id">
                             Edit
                         </a>
                     </th>
@@ -56,6 +56,6 @@
     }
     else
     {
-        <h3 class="text-center">There are no reservations! No money for you!</h3>
+        <h3 class="text-center">There are no bikes!</h3>
     }
 </div>

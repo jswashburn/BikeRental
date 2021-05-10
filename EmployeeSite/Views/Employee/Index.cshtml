@@ -36,12 +36,12 @@
                 {
                     <tr>
                         <th scope="row">
-                            <a asp-controller="Employee" asp-action="Create">
+                            <a asp-controller="Employee" asp-action="Edit" asp-route-id="@emp.Id">
                                 Edit
                             </a>
                         </th>
                         <th scope="row">
-                            <a asp-action="Delete" asp-route-id="@emp.Id">
+                            <a asp-controller="Employee" asp-action="Delete" asp-route-id="@emp.Id">
                                 Delete
                             </a>
                         </th>
@@ -56,6 +56,6 @@
     }
     else
     {
-        <h3 class="text-center">There are no reservations! No money for you!</h3>
+        <h3 class="text-center">There are no employees!</h3>
     }
 </div>
