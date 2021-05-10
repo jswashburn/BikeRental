@@ -1,7 +1,7 @@
 ﻿using BikeRentalApi.Models;
 using System.Threading.Tasks;
 
-namespace CustomerSite.Services
+namespace Services.Reservations
 {
     public interface IReservationService
     {
