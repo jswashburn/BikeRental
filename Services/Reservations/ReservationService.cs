@@ -23,17 +23,15 @@ namespace Services.Reservations
 
         public async Task<Reservation> CreateReservation(Customer customer, int bikeId, int daysRequested)
         {
-            Bike bike = await GetBikeFromId(bikeId);
-            Customer existing = await PostCustomerIfEmailNotFound(customer);
-            Reservation created = await PostNewReservation(bike, existing, daysRequested);
+            Bike bike = await FindBikeAsync(bikeId);
+            Customer existing = await RegisterNewCustomerAsync(customer);
 
-            return created;
+            return await PostNewReservation(bike, existing, daysRequested);
         }
 
-        public async Task<Bike> GetBikeFromId(int id)
+        public async Task<Bike> FindBikeAsync(int id)
         {
-            Bike bike = await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
-            return bike;
+            return await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
         }
 
         async Task<Reservation> PostNewReservation(Bike bike, Customer customer, int daysRequested)
@@ -60,7 +58,7 @@ namespace Services.Reservations
             return reservation;
         }
 
-        async Task<Customer> PostCustomerIfEmailNotFound(Customer customer)
+        async Task<Customer> RegisterNewCustomerAsync(Customer customer)
         {
 
             Customer existing = await _customersRepo
