@@ -1,8 +1,8 @@
 ﻿using BikeRentalApi;
 using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
 using CustomerSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Repositories;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace CustomerSite.Controllers
         readonly IRepositoryAsync<Bike> _bikesRepo;
         readonly IRepositoryAsync<BikeStore> _bikeStoresRepo;
 
-        public HomeController(IRepositoryAsync<Bike> bikes, 
+        public HomeController(IRepositoryAsync<Bike> bikes,
             IRepositoryAsync<BikeStore> bikeStores)
         {
             _bikesRepo = bikes;

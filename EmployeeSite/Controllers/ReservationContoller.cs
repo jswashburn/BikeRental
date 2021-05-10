@@ -1,8 +1,8 @@
 ﻿using BikeRentalApi;
 using BikeRentalApi.Models;
-using BikeRentalApi.Models.Repositories;
 using EmployeeSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Repositories;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
