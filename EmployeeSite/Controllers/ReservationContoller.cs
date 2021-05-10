@@ -56,7 +56,9 @@ namespace EmployeeSite.Controllers
             Reservation res = await _resRepo.GetAsync(id, BikeRentalRoute.Reservations);
             if (res == null)
                 return NotFound();
-            await _resRepo.DeleteAsync(id, "reservation");
+
+            await _resRepo.DeleteAsync(id, BikeRentalRoute.Reservations);
+
             return View(nameof(Index));
         }
     }

@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     string BrandName = "Bike Rental Agency";
 }
 <!DOCTYPE html>
@@ -31,6 +31,11 @@
                                 Privacy
                             </a>
                         </li>
+                        <li>
+                            <button id="btnShowModal" data-toggle="modal" data-target="#loginModal" type="button" class="btn btn-dark mr-2">
+                                Sign In
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -38,6 +43,37 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @*Sign in modal*@
+            <div class="modal fade" tabindex="-1" id="loginModal"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Log in
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <input class="form-control" type="text"
+                                           placeholder="Login Username" id="inputUserName" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Login Password"
+                                           type="password" id="inputPassword" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-dark" asp-controller="Reservation" asp-action="Index">
+                                Sign In
+                            </a>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @RenderBody()
         </main>
     </div>
@@ -47,7 +83,7 @@
             &copy; 2021 - @BrandName -
             <a asp-controller="Home"
                asp-action="Privacy">
-            Privacy
+                Privacy
             </a>
         </div>
     </footer>
