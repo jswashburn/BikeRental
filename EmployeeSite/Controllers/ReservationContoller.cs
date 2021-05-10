@@ -59,7 +59,8 @@ namespace EmployeeSite.Controllers
 
             await _resRepo.DeleteAsync(id, BikeRentalRoute.Reservations);
 
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }
