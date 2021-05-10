@@ -35,6 +35,17 @@ namespace EmployeeSite.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("JobTitle,FirstName,LastName,Emailaddress,PhoneNumberStoreId,SupervisorId")] Employee emp)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["InvalidSubmit"] = true;
+                return View(nameof(Index), emp);
+            }
+            emp = await _empRepo.InsertAsync(emp, BikeRentalRoute.Employees);
+            return View("Employee created", emp);
+        }
         public IActionResult Edit()
         {
             return View();
