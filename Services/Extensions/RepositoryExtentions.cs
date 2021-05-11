@@ -1,5 +1,4 @@
-﻿using BikeRentalApi;
-using BikeRentalApi.Models;
+﻿using BikeRentalApi.Models;
 using Services.Repositories;
 using System.Net.Http;
 using System.Threading.Tasks;
