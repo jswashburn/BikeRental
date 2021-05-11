@@ -1,5 +1,4 @@
-﻿using BikeRentalApi;
-using BikeRentalApi.Models;
+﻿using BikeRentalApi.Models;
 using Services.Extensions;
 using Services.Repositories;
 using System;
@@ -21,12 +20,32 @@ namespace Services.Reservations
             _bikesRepo = bikes;
         }
 
-        public async Task<Reservation> CreateReservation(Customer customer, int bikeId, int daysRequested)
+        public async Task<Reservation> CreateReservation(ReservationRequest request)
         {
-            Bike bike = await FindBikeAsync(bikeId);
-            Customer existing = await RegisterNewCustomerAsync(customer);
+            // Find the bike
+            Bike requestedBike = await _bikesRepo
+                .GetAsync(request.RequestedBikeId, BikeRentalRoute.Bikes);
 
-            return await PostNewReservation(bike, existing, daysRequested);
+            // Update the bike
+            requestedBike.Available = false;
+            requestedBike = await _bikesRepo
+                .UpdateAsync(requestedBike, BikeRentalRoute.Bikes);
+
+            // Update the customer
+            request.Customer = await RegisterNewCustomerAsync(request.Customer);
+
+            // Get the reservation object
+            Reservation reservation = request.GetReservation(requestedBike);
+
+            // Post it
+            reservation = await _reservationsRepo
+                .InsertAsync(reservation, BikeRentalRoute.Reservations);
+
+            // We have to set these properties after posting or there will be key conflicts
+            reservation.Customer = request.Customer;
+            reservation.Bike = requestedBike;
+
+            return reservation;
         }
 
         public async Task<Bike> FindBikeAsync(int id)
@@ -34,35 +53,9 @@ namespace Services.Reservations
             return await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
         }
 
-        async Task<Reservation> PostNewReservation(Bike bike, Customer customer, int daysRequested)
-        {
-            Reservation reservation = new Reservation
-            {
-                BikeId = bike.Id,
-                CustomerId = customer.Id,
-                DateReserved = DateTime.Now,
-                DateDue = DateTime.Now.AddDays(daysRequested),
-                GrandTotal = CalculateGrandTotal(bike, daysRequested)
-            };
-
-            reservation = await _reservationsRepo
-                .InsertAsync(reservation, BikeRentalRoute.Reservations);
-
-            bike.Available = false;
-            bike = await _bikesRepo
-                .UpdateAsync(bike, BikeRentalRoute.Bikes);
-
-            reservation.Customer = customer;
-            reservation.Bike = bike;
-
-            return reservation;
-        }
-
         async Task<Customer> RegisterNewCustomerAsync(Customer customer)
         {
-
-            Customer existing = await _customersRepo
-                .GetByEmailAsync(customer.EmailAddress);
+            Customer existing = await _customersRepo.GetByEmailAsync(customer.EmailAddress);
 
             if (existing != null)
                 return existing;
@@ -71,12 +64,6 @@ namespace Services.Reservations
                 .InsertAsync(customer, BikeRentalRoute.Customers);
 
             return newCustomer;
-        }
-
-        decimal CalculateGrandTotal(Bike bike, int daysRequested)
-        {
-            decimal subtotal = bike.Price * daysRequested;
-            return subtotal + (bike.Surcharge ?? 0);
         }
     }
 }
