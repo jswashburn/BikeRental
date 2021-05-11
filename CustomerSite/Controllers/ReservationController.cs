@@ -1,5 +1,4 @@
 ﻿using BikeRentalApi.Models;
-using CustomerSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services.Reservations;
 using System.Threading.Tasks;
@@ -26,23 +25,18 @@ namespace CustomerSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation(CustomerReservationViewModel vm)
+        public async Task<IActionResult> CreateReservation(ReservationRequest reservationRequest)
         {
-            Bike bike = await _reservationService.FindBikeAsync(vm.RequestedBikeId);
-
-            if (bike == null)
-                return BadRequest();
-
             // Refresh page if model validation fails
             if (!ModelState.IsValid)
             {
                 TempData["InvalidSubmit"] = true;
-                return View(nameof(Index), bike);
+                return RedirectToAction(nameof(Index), reservationRequest.RequestedBikeId);
             }
 
             // Create a reservation and move to confirmation page
             Reservation createdReservation = await _reservationService
-                .CreateReservation(vm.Customer, vm.RequestedBikeId, vm.DaysRequested);
+                .CreateReservation(reservationRequest);
 
             return View("ReservationConfirmed", createdReservation);
         }
