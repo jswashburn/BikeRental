@@ -23,8 +23,7 @@ namespace BikeRentalApi
         {
             services.AddDbContext<BikeRentalDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("BikeRentalDbContext"));
-                //options.UseInMemoryDatabase("BikeRentalDbContext");
+                options.UseInMemoryDatabase("BikeRentalDbContext");
             });
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
