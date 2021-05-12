@@ -16,7 +16,9 @@ namespace BikeRentalApi.Data
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.Seed();
+        // Un-comment to enable seeding data
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //    => modelBuilder.Seed();
     }
 }
