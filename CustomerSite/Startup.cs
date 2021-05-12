@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Repositories;
 using Services.Reservations;
+using Services.Stores;
 using System;
 using System.Net.Http.Headers;
 
@@ -34,6 +35,7 @@ namespace CustomerSite
 
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(ApiRepository<>));
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IStoreService, StoreService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
