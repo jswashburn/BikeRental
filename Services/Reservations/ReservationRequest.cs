@@ -1,4 +1,5 @@
 ﻿using BikeRentalApi.Models;
+using Services.Stores;
 using System;
 
 namespace Services.Reservations
@@ -9,7 +10,7 @@ namespace Services.Reservations
         public int RequestedBikeId { get; set; }
         public int DaysRequested { get; set; }
 
-        public Reservation GetReservation(Bike bikeRequested)
+        public Reservation BuildReservation(PricingInfo pricingInfo)
         {
             Reservation reservation = new Reservation
             {
@@ -17,13 +18,10 @@ namespace Services.Reservations
                 CustomerId = Customer.Id,
                 DateReserved = DateTime.Now,
                 DateDue = DateTime.Now.AddDays(DaysRequested),
-                GrandTotal = CalculateGrandTotal(bikeRequested, DaysRequested)
+                GrandTotal = pricingInfo.Cost
             };
 
             return reservation;
         }
-
-        decimal CalculateGrandTotal(Bike bike, int daysRequested) =>
-            (bike.Price * daysRequested) + (bike.Surcharge ?? 0);
     }
 }
