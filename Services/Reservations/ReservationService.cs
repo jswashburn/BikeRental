@@ -1,69 +1,80 @@
 ﻿using BikeRentalApi.Models;
-using Services.Extensions;
 using Services.Repositories;
-using System;
 using System.Threading.Tasks;
+using Services.Stores;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Reservations
 {
     public class ReservationService : IReservationService
     {
-        readonly IRepositoryAsync<Customer> _customersRepo;
         readonly IRepositoryAsync<Reservation> _reservationsRepo;
-        readonly IRepositoryAsync<Bike> _bikesRepo;
+        readonly IStoreService _storeService;
 
-        public ReservationService(IRepositoryAsync<Customer> customers,
-            IRepositoryAsync<Reservation> reservations, IRepositoryAsync<Bike> bikes)
+        public ReservationService(IRepositoryAsync<Reservation> reservations, 
+            IStoreService storeService)
         {
-            _customersRepo = customers;
             _reservationsRepo = reservations;
-            _bikesRepo = bikes;
+            _storeService = storeService;
         }
 
-        public async Task<Reservation> CreateReservation(ReservationRequest request)
+        public async Task<Reservation> CreateReservationAsync(ReservationRequest request)
         {
-            // Find the bike
-            Bike requestedBike = await _bikesRepo
-                .GetAsync(request.RequestedBikeId, BikeRentalRoute.Bikes);
-
-            // Update the bike
-            requestedBike.Available = false;
-            requestedBike = await _bikesRepo
-                .UpdateAsync(requestedBike, BikeRentalRoute.Bikes);
-
-            // Update the customer
-            request.Customer = await RegisterNewCustomerAsync(request.Customer);
+            Bike bike = await _storeService.ReserveBikeAsync(request.RequestedBikeId);
+            Customer customer = await _storeService.RegisterCustomerAsync(request.Customer);
+            PricingInfo pricingInfo = await _storeService.CalculatePriceAsync(bike, request.DaysRequested);
 
             // Get the reservation object
-            Reservation reservation = request.GetReservation(requestedBike);
+            Reservation reservation = request.BuildReservation(pricingInfo);
 
             // Post it
             reservation = await _reservationsRepo
                 .InsertAsync(reservation, BikeRentalRoute.Reservations);
 
             // We have to set these properties after posting or there will be key conflicts
-            reservation.Customer = request.Customer;
-            reservation.Bike = requestedBike;
+            reservation.Customer = customer;
+            reservation.CustomerId = customer.Id;
+            reservation.Bike = bike;
+
+            // Update it
+            reservation = await _reservationsRepo
+                .UpdateAsync(reservation, BikeRentalRoute.Reservations);
 
             return reservation;
         }
 
-        public async Task<Bike> FindBikeAsync(int id)
+        public async Task<Reservation> CreateReservationAsync(Reservation reservation)
         {
-            return await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
+            return await _reservationsRepo
+                .InsertAsync(reservation, BikeRentalRoute.Reservations);
         }
 
-        async Task<Customer> RegisterNewCustomerAsync(Customer customer)
+        public async Task<Reservation> DeleteReservationAsync(int reservationId)
         {
-            Customer existing = await _customersRepo.GetByEmailAsync(customer.EmailAddress);
+            Reservation deleted = await _reservationsRepo
+                .DeleteAsync(reservationId, BikeRentalRoute.Reservations);
 
-            if (existing != null)
-                return existing;
+            deleted.Bike = await _storeService.TurnInBikeAsync(deleted.BikeId);
 
-            Customer newCustomer = await _customersRepo
-                .InsertAsync(customer, BikeRentalRoute.Customers);
+            return deleted;
+        }
 
-            return newCustomer;
+        public async Task<IEnumerable<Reservation>> GetReservationsAsync()
+        {
+            IEnumerable<Reservation> reservations = await _reservationsRepo
+                .GetAsync(BikeRentalRoute.Reservations);
+
+            IEnumerable<Customer> customers = await _storeService.GetCustomersAsync();
+            IEnumerable<Bike> bikes = await _storeService.GetBikesAsync();
+
+            foreach (Reservation r in reservations)
+            {
+                r.Customer = customers.FirstOrDefault(c => c.Id == r.CustomerId);
+                r.Bike = bikes.FirstOrDefault(b => b.Id == r.BikeId);
+            }
+
+            return reservations;
         }
     }
 }
