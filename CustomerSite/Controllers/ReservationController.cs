@@ -1,5 +1,7 @@
 ﻿using BikeRentalApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services;
+using Services.Repositories;
 using Services.Reservations;
 using System.Threading.Tasks;
 
@@ -8,15 +10,18 @@ namespace CustomerSite.Controllers
     public class ReservationController : Controller
     {
         readonly IReservationService _reservationService;
+        readonly IRepositoryAsync<Bike> _bikesRepo;
 
-        public ReservationController(IReservationService reservationService)
+        public ReservationController(IReservationService reservationService, 
+            IRepositoryAsync<Bike> bikes)
         {
             _reservationService = reservationService;
+            _bikesRepo = bikes;
         }
 
         public async Task<IActionResult> Index(int id)
         {
-            Bike requestedBike = await _reservationService.FindBikeAsync(id);
+            Bike requestedBike = await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
 
             if (requestedBike == null)
                 return NotFound();
@@ -36,7 +41,7 @@ namespace CustomerSite.Controllers
 
             // Create a reservation and move to confirmation page
             Reservation createdReservation = await _reservationService
-                .CreateReservation(reservationRequest);
+                .CreateReservationAsync(reservationRequest);
 
             return View("ReservationConfirmed", createdReservation);
         }
