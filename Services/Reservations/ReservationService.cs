@@ -1,9 +1,9 @@
 ﻿using BikeRentalApi.Models;
 using Services.Repositories;
-using System.Threading.Tasks;
 using Services.Stores;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Reservations
 {
@@ -12,7 +12,7 @@ namespace Services.Reservations
         readonly IRepositoryAsync<Reservation> _reservationsRepo;
         readonly IStoreService _storeService;
 
-        public ReservationService(IRepositoryAsync<Reservation> reservations, 
+        public ReservationService(IRepositoryAsync<Reservation> reservations,
             IStoreService storeService)
         {
             _reservationsRepo = reservations;

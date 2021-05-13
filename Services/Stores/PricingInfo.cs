@@ -6,7 +6,7 @@ namespace Services.Stores
     {
         decimal _totalBeforeDiscount;
         decimal _amountSaved;
-        
+
         public decimal Cost => _totalBeforeDiscount - _amountSaved;
 
         public PricingInfo(BikeStore store, Bike bike, int daysRequested)

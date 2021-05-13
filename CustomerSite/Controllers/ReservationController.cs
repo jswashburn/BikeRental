@@ -12,7 +12,7 @@ namespace CustomerSite.Controllers
         readonly IReservationService _reservationService;
         readonly IRepositoryAsync<Bike> _bikesRepo;
 
-        public ReservationController(IReservationService reservationService, 
+        public ReservationController(IReservationService reservationService,
             IRepositoryAsync<Bike> bikes)
         {
             _reservationService = reservationService;
