@@ -42,7 +42,7 @@ namespace EmployeeSite.Controllers
                 return View(nameof(Index), bike);
             }
             bike = await _bikeRepo.InsertAsync(bike, BikeRentalRoute.Bikes);
-            return View("Bike created", bike);
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult Edit()
         {
