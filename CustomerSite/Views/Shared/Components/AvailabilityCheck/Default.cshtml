@@ -3,12 +3,12 @@
 @if (Model?.DateDue < DateTime.Now)
 {
 <p>
-    We apologize, this bike seems to be late! Please check back soon. (╯°□°）╯︵ ┻━┻
+    We apologize, this bike seems to be late! <span class="bg-warning"><em>Please check back soon.</em></span>  (╯°□°）╯︵ ┻━┻
 </p>
 }
 else
 {
 <p>
-    Please check back after @Model?.DateDue.ToShortDateString() ⏰
+    Please check back <span class="bg-warning"><em>after @Model?.DateDue.ToShortDateString()</em></span> ⏰
 </p>
 }
