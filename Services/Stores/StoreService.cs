@@ -47,7 +47,7 @@ namespace Services.Stores
         public async Task<Bike> TurnInBikeAsync(int bikeId) =>
             await UpdateBikeAvailability(bikeId, true);
 
-        public async Task<Bike> FindBikeAsync(int id) => 
+        public async Task<Bike> FindBikeAsync(int id) =>
             await _bikesRepo.GetAsync(id, BikeRentalRoute.Bikes);
 
         public async Task<IEnumerable<Bike>> GetBikesAsync() =>
@@ -59,7 +59,8 @@ namespace Services.Stores
         async Task<Bike> UpdateBikeAvailability(int bikeId, bool available)
         {
             Bike bike = await _bikesRepo.GetAsync(bikeId, BikeRentalRoute.Bikes);
-            bike.Available = available;
+            if (bike != null)
+                bike.Available = available;
             return await _bikesRepo.UpdateAsync(bike, BikeRentalRoute.Bikes);
         }
     }
